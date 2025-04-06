@@ -21,6 +21,7 @@ import debug
 import utime
 import random
 import json
+import jozelot
 
 # Hardware Setup
 
