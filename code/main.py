@@ -58,8 +58,10 @@ debug.println("Start variables setup finished", "INIT")
 
 # Software Setup
 
-
-
+with open('configuration.json') as configuration:
+    config = json.load(configuration)
+    configuration.close()
+    print(config)
 
 # Automat Variablen
 
