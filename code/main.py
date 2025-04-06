@@ -9,6 +9,8 @@
 # '#': Abbruch
 # '*': Bestätigen
 
+# Es gibt einige geheime Codes die man eingeben kann, die auch in der configuration.json geändert werden können
+
 
 from time import sleep_ms
 from machine import I2C, Pin
