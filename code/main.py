@@ -287,4 +287,32 @@ while True:
 
           # Produkt Suche
 
-        restart()
+        for product in config['products']:
+            if product['item_id'] == product_id:
+                product_price = product['price']
+                product_name = product['name']
+                print(product_name)
+                break
+            
+        if product_price and product_name:
+            
+            lcd.clear()
+            lcd.putstr(str(product_id) + ":")
+            lcd.move_to(6,0)
+            lcd.putstr("EUR")
+            lcd.move_to(12,0)
+            lcd.putstr(str(product_price))
+            lcd.move_to(0,1)
+            lcd.putstr(product_name)
+            
+            debug.println("Product found | Condition 7")
+            condition = 7
+        else:
+            
+            main_menu()
+            debug.println("Product not found | Condition 2")
+            condition = 2
+    elif (condition == 7):
+        
+        # Geld eingabe
+        print()
