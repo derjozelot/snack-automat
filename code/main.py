@@ -3,6 +3,7 @@
 # Wir haben uns dazu entschieden die Variablen und Backend benannten Funktionen aus Simplizität auf Englisch zu benennen!
 #
 # JJK Electronics©
+#
 
 # Zum starten: Einfach 3 zeichige Item Nummer eingeben.
 # 4 Zeichen: Abbruch
@@ -21,6 +22,8 @@ import debug
 import utime
 import random
 import json
+
+debug.println("Imports loaded", "INIT")
 
 # Hardware Setup
 
@@ -42,6 +45,8 @@ KEYMAP = ['1', '2', '3',
 keypad = Keypad(KEYMAP, ROW_PINS, COLUMN_PINS, NUM_ROWS, NUM_COLS)
 keypad.set_debounce_time(400)
 
+debug.println("Hardware setup finished", "INIT")
+
 # Produkt Variablen
 
 product_id = None
@@ -49,22 +54,21 @@ product_name = None
 product_price = None
 product_slot = None
 
-debug.println("Setup product variables")
+debug.println("Start variables setup finished", "INIT")
 
 # Software Setup
 
-with open('configuration.json') as configuration:
-    config = json.load(configuration)
-    configuration.close()
-    print(config)
+
+
 
 # Automat Variablen
 
-condition = 0 # Startzustand | condition = Zustand
+condition = 0 # condition = Zustand
 user_input = None
 error_code = None
+key = None
 
-debug.println("Setup automat variables")
+debug.println("Setup automat variables", "INIT")
 
 def main_menu():
   lcd.clear()
@@ -72,14 +76,21 @@ def main_menu():
   lcd.putstr("Willkommen!")
   lcd.move_to(0,1)
   lcd.putstr("Bitte w\xE1hlen...")        
-  debug.println("Main menu")
+  debug.println("Main menu loaded")
 
 def restart():
     global condition
     condition = 0
-    debug.println("Boot: Restart")
+    debug.println("Restart","SYSTEM")
+
+def get_uptime_seconds():
+    uptime_ms = utime.ticks_ms() / 1000
+    return round(uptime_ms, 2)
+
+debug.println("System variables and definitions setup finished", "INIT")
 
 # Automat Logik 
+
 while True:
     key = keypad.get_key()
 
@@ -89,27 +100,29 @@ while True:
         
         lcd.move_to(0,1)
         lcd.putstr("Starting...")
-        debug.println("Boot: Starting...")
+        debug.println("System starting...", "BOOT")
         utime.sleep(random.randint(2,6))
         
         lcd.clear()
         lcd.putstr("JJK Electronics")
         lcd.move_to(0,1)
         lcd.putstr("Booting...")
-        debug.println("Boot: Booting...")
+        debug.println("System booting...", "BOOT")
         utime.sleep(random.randint(2,6))
         
         lcd.clear()
         lcd.putstr("JJK Electronics")
         lcd.move_to(0,1)
         lcd.putstr("Finished!")
-        debug.println("Boot: Finished!")
+        debug.println(f"System start finished after {get_uptime_seconds()}s", "BOOT")
         utime.sleep(2)
         
         main_menu()
 
         # Zustand
         condition = 2
+
+        debug.println(f"Condition changed to {condition}", "DEBUG")
         
     elif (condition == 1):
         
@@ -118,11 +131,14 @@ while True:
         error_code = 404
         lcd.clear()
         lcd.putstr("Error Code: " + str(error_code))
-        debug.println("Error: " + str(error_code))
+        debug.println(f"The system encountered an error: {str(error_code)}", "ERROR")
         
         utime.sleep(2)
         main_menu()
+
         condition = 2
+
+        debug.println(f"Condition changed to {condition}", "DEBUG")
         
     elif (condition == 2):
         
@@ -130,19 +146,30 @@ while True:
 
         if key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
           
-          lcd.clear()
+            lcd.clear()
 
-          user_input = key
-          lcd.move_to(0,0)
-          lcd.putstr("AUSWAHL:")
-          lcd.move_to(13,0)
-          lcd.putstr(user_input)
-          lcd.move_to(0,1)
-          lcd.putstr("BETRIEBSBEREIT")
+            user_input = key
+            lcd.move_to(0,0)
+            lcd.putstr("AUSWAHL:")
+            lcd.move_to(13,0)
+            lcd.putstr(user_input)
+            lcd.move_to(0,1)
+            lcd.putstr("BETRIEBSBEREIT")
 
-          debug.println("Condition 3")
-          condition = 3
-    
+            debug.println(f"User input: {str(key)}", "INFO")
+
+            condition = 3
+            debug.println(f"Condition changed to {condition}", "DEBUG")
+
+        elif (key == '*'):
+
+            lcd.clear()
+            lcd.putstr("Debug Passwort:")
+
+            condition = 20
+            debug.println("Debug enter_password_screen loaded", "INFO")
+            debug.println(f"Condition changed to {condition}", "DEBUG")
+
     elif (condition == 3):
 
         # Automat wartet auf zweiten Key
@@ -157,8 +184,9 @@ while True:
           lcd.move_to(0,1)
           lcd.putstr("BETRIEBSBEREIT")
 
-          debug.println("Condition 4")
+          debug.println(f"User input: {str(key)}", "INFO")
           condition = 4
+          debug.println(f"Condition changed to {condition}", "DEBUG")
         
         if (key == '#'):
 
@@ -170,9 +198,10 @@ while True:
           utime.sleep(1)
           lcd.clear()        
 
-          debug.println("Pressed: # | Condition 2")
+          debug.println("#: User canceled")
           main_menu()
           condition = 2
+          debug.println(f"Condition changed to {condition}", "DEBUG")
     
     elif (condition == 4):
 
@@ -188,8 +217,10 @@ while True:
           lcd.move_to(0,1)
           lcd.putstr("BETRIEBSBEREIT")
 
-          debug.println("Condition 5")
+          debug.println(f"User input: {str(key)}", "INFO")
+          debug.println(f"Full user input: {user_input}", "INFO")
           condition = 5
+          debug.println(f"Condition changed to {condition}", "DEBUG")
 
         if (key == '#'):
 
@@ -201,9 +232,10 @@ while True:
           utime.sleep(1)
           lcd.clear()        
 
-          debug.println("Pressed: # | Condition 2")
+          debug.println("#: User canceled")
           main_menu()
           condition = 2
+          debug.println(f"Condition changed to {condition}", "DEBUG")
       
     elif (condition == 5):
 
@@ -217,8 +249,9 @@ while True:
           product_id = user_input
           user_input = None
 
-          debug.println("Pressed: * | Condition 6")
+          debug.println(f"*: User confirmed input: {product_id}", "INFO")
           condition = 6
+          debug.println(f"Condition changed to {condition}", "DEBUG")
         
         if (key == '#'):
 
@@ -230,9 +263,10 @@ while True:
           utime.sleep(1)
           lcd.clear()        
 
-          debug.println("Pressed: # | Condition 2")
+          debug.println("#: User canceled")
           main_menu()
           condition = 2
+          debug.println(f"Condition changed to {condition}", "DEBUG")
         
         if key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
 
@@ -244,40 +278,13 @@ while True:
           utime.sleep(1)
           lcd.clear()
 
-          debug.println("False user input | Condition 2")
+          debug.println("To many characters", "ERROR")
           main_menu()
           condition = 2
+          debug.println(f"Condition changed to {condition}", "DEBUG")
     
     elif (condition == 6):
 
           # Produkt Suche
 
-        for product in config['products']:
-            if product['item_id'] == product_id:
-                product_price = product['price']
-                product_name = product['name']
-                print(product_name)
-                break
-            
-        if product_price and product_name:
-            
-            lcd.clear()
-            lcd.putstr(str(product_id) + ":")
-            lcd.move_to(6,0)
-            lcd.putstr("EUR")
-            lcd.move_to(12,0)
-            lcd.putstr(str(product_price))
-            lcd.move_to(0,1)
-            lcd.putstr(product_name)
-            
-            debug.println("Product found | Condition 7")
-            condition = 7
-        else:
-            
-            main_menu()
-            debug.println("Product not found | Condition 2")
-            condition = 2
-    elif (condition == 7):
-        
-        # Geld eingabe
-        print()
+        restart()
