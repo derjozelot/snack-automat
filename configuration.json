@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "name": "Kartoffel Chipps",
+      "item_id": "001",
+      "slot_id": "001",
+      "price": "1,50"
+    },
+    {
+      "name": "Harribo B\xE1rchen",
+      "item_id": "002",
+      "slot_id": "002",
+      "price": "1,00"
+    },
+    {
+      "name": "Schokolade",
+      "item_id": "003",
+      "slot_id": "003",
+      "price": "2,00"
+    }
+  ]
+}
