@@ -22,7 +22,6 @@ import debug
 import utime
 import random
 import json
-import jozelot
 
 debug.println("Imports loaded", "INIT")
 
