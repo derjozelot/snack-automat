@@ -46,9 +46,8 @@ KEYMAP = ['1', '2', '3',
 keypad = Keypad(KEYMAP, ROW_PINS, COLUMN_PINS, NUM_ROWS, NUM_COLS)
 keypad.set_debounce_time(400)
 
-motor1 = schrittmotor(9,10,11,12)
-
-motor1.eine_umdrehung()
+motor_001 = schrittmotor(9,10,11,12)
+motor_002 = schrittmotor(13,14,15,16)
 
 debug.println("Hardware setup finished", "INIT")
 
@@ -322,6 +321,21 @@ while True:
     elif (condition == 7):
         
         # Geld eingabe
+        condition = 10
+
+    elif (condition == 10):
+
+        # Produkt Ausgabe
+
+        motor_001.eine_umdrehung()
+
+
+
+
+
+    elif (condition == 20):
+
+        # Debug Password enter
         print()
 
 
