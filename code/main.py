@@ -17,6 +17,7 @@ from time import sleep_ms
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
 from DIYables_Pico_Keypad import Keypad
+from schrittmotorlib import schrittmotor
 
 import debug
 import utime
@@ -44,6 +45,10 @@ KEYMAP = ['1', '2', '3',
 
 keypad = Keypad(KEYMAP, ROW_PINS, COLUMN_PINS, NUM_ROWS, NUM_COLS)
 keypad.set_debounce_time(400)
+
+motor1 = schrittmotor(9,10,11,12)
+
+motor1.eine_umdrehung()
 
 debug.println("Hardware setup finished", "INIT")
 
@@ -307,14 +312,16 @@ while True:
             lcd.move_to(0,1)
             lcd.putstr(product_name)
             
-            debug.println("Product found | Condition 7")
+            debug.println("Product found", "INFO")
             condition = 7
         else:
             
             main_menu()
-            debug.println("Product not found | Condition 2")
+            debug.println("Product not found", "ERROR")
             condition = 2
     elif (condition == 7):
         
         # Geld eingabe
         print()
+
+
