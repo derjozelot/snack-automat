@@ -1,7 +1,14 @@
+# Diese Datei ist einfach um Fehler zu finden und um den ganzen Prozess zu loggen
+# Die Datei ist nicht wirklich eine Library, aber trotzdem praktisch
+
+#
+# JJK Electronics
+#
+
+
 import utime
 
-# Einfach um Debugs zu printen, kp warum genau, aber ist cool
-
+# Hiermit kann man einschalten ob 'DEBUG' getaggte Logs angezeigt werden sollen oder nicht
 debug = True
 
 ALLOWED_LEVELS = ["INFO", "BOOT", "INIT", "SYSTEM", "ERROR", "WARN", "SECURITY", "DEBUG"]
