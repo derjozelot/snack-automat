@@ -315,7 +315,10 @@ while True:
             debug.println("Product found", "INFO")
             condition = 7
         else:
-            
+
+            lcd.clear()
+            lcd.putstr(f"KEIN PRODUKT MIT ID '{product_id}' GEFUNDEN...")
+            utime.sleep(1)
             main_menu()
             debug.println("Product not found", "ERROR")
             condition = 2
