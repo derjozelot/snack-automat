@@ -2,7 +2,7 @@
 # Die Datei ist nicht wirklich eine Library, aber trotzdem praktisch
 
 #
-# JJK Electronics
+# JJK Electronics©
 #
 
 
@@ -37,10 +37,10 @@ def println(message, level="INFO"):
     
     timestamp = get_timestamp()
     #print(f"[{timestamp}] [{level}] {message}")
-    log_entry = f"[{timestamp}] [{level}] {message}\n"
+    log_entry = f"[{timestamp}] [{level}] {message}"
 
     with open('latest.log', 'a') as log_file:
-        log_file.write(log_entry)
+        log_file.write(log_entry + "\n")
     
     print(log_entry)
 
