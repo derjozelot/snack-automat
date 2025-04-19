@@ -1,6 +1,7 @@
 #
 # Süßgkeiten Automat von Jakob F. Jonas O. und Karim A.
 # Wir haben uns dazu entschieden die Variablen und Backend benannten Funktionen aus Simplizität auf Englisch zu benennen!
+
 #
 # JJK Electronics©
 #
