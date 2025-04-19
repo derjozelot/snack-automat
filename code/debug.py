@@ -39,7 +39,7 @@ def println(message, level="INFO"):
     #print(f"[{timestamp}] [{level}] {message}")
     log_entry = f"[{timestamp}] [{level}] {message}\n"
 
-    with open('1.txt', 'a') as log_file:
+    with open('latest.log', 'a') as log_file:
         log_file.write(log_entry)
     
     print(log_entry)
