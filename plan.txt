@@ -1,0 +1,2 @@
+Nachrichten besser machen / konfigurierbar machen
+Code aufräumen
