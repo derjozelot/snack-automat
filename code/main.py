@@ -29,6 +29,9 @@ debug.println("Imports loaded", "INIT")
 
 # Hardware Setup
 
+led_g = Pin(17, Pin.OUT)
+led_r = Pin(18, Pin.OUT)
+
 i2c = I2C(0, sda=Pin(0), scl=Pin(1), freq=100000)
 
 lcd = I2cLcd(i2c, 0x27, 2, 16)
@@ -57,6 +60,7 @@ debug.println("Hardware setup finished", "INIT")
 product_id = None
 product_name = None
 product_price = None
+product_motor = None
 product_slot = None
 
 debug.println("Start variables setup finished", "INIT")
@@ -70,7 +74,7 @@ with open('configuration.json') as configuration:
 
 # Automat Variablen
 
-condition = 0 # condition = Zustand
+condition = 2 # condition = Zustand
 user_input = None
 error_code = None
 key = None
@@ -78,6 +82,8 @@ key = None
 debug.println("Setup automat variables", "INIT")
 
 def main_menu():
+  led_g.off()
+  led_r.off()
   lcd.clear()
   lcd.move_to(2,0)
   lcd.putstr("Willkommen!")
@@ -104,11 +110,13 @@ while True:
     if (condition == 0):
         
         # Boot Logik / Startup
-        
+        led_r.toggle()
         lcd.move_to(0,1)
         lcd.putstr("Starting...")
         debug.println("System starting...", "BOOT")
         utime.sleep(random.randint(2,6))
+        led_r.toggle()
+        led_g.toggle()
         
         lcd.clear()
         lcd.putstr("JJK Electronics")
@@ -116,6 +124,7 @@ while True:
         lcd.putstr("Booting...")
         debug.println("System booting...", "BOOT")
         utime.sleep(random.randint(2,6))
+        led_r.toggle()
         
         lcd.clear()
         lcd.putstr("JJK Electronics")
@@ -123,6 +132,8 @@ while True:
         lcd.putstr("Finished!")
         debug.println(f"System start finished after {get_uptime_seconds()}s", "BOOT")
         utime.sleep(2)
+        led_r.toggle()
+        led_g.toggle()
         
         main_menu()
 
@@ -134,6 +145,7 @@ while True:
     elif (condition == 1):
         
         # Error Zustand
+        led_r.on()
         
         error_code = 404
         lcd.clear()
@@ -142,7 +154,8 @@ while True:
         
         utime.sleep(2)
         main_menu()
-
+        
+        led_r.off()
         condition = 2
 
         debug.println(f"Condition changed to {condition}", "DEBUG")
@@ -171,7 +184,7 @@ while True:
         elif (key == '*'):
 
             lcd.clear()
-            lcd.putstr("Debug Passwort:")
+            lcd.putstr("DEBUG PASSWORD:")
 
             condition = 20
             debug.println("Debug enter_password_screen loaded", "INFO")
@@ -201,7 +214,8 @@ while True:
 
           user_input = None
           lcd.clear()
-          lcd.putstr("ABBRUCH...")
+          led_r.on()
+          lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
           utime.sleep(1)
           lcd.clear()        
 
@@ -235,7 +249,8 @@ while True:
 
           user_input = None
           lcd.clear()
-          lcd.putstr("ABBRUCH...")
+          lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+          led_r.on()
           utime.sleep(1)
           lcd.clear()        
 
@@ -266,7 +281,8 @@ while True:
 
           user_input = None
           lcd.clear()
-          lcd.putstr("ABBRUCH...")
+          lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+          led_r.on()
           utime.sleep(1)
           lcd.clear()        
 
@@ -281,7 +297,8 @@ while True:
 
           user_input = None
           lcd.clear()
-          lcd.putstr("ABBRUCH...")
+          lcd.putstr("EINGABE ZU LANG\nABBRUCH...")
+          led_r.on()
           utime.sleep(1)
           lcd.clear()
 
@@ -298,12 +315,16 @@ while True:
             if product['item_id'] == product_id:
                 product_price = product['price']
                 product_name = product['name']
+                product_motor = product['motor_id']
                 print(product_name)
                 break
             
         if product_price and product_name:
             
+            # Prüfen ob Produkt noch in Stock
+            
             lcd.clear()
+            led_g.on()
             lcd.putstr(str(product_id) + ":")
             lcd.move_to(6,0)
             lcd.putstr("EUR")
@@ -317,6 +338,7 @@ while True:
         else:
 
             lcd.clear()
+            led_r.on()
             lcd.putstr(f"KEIN PRODUKT MIT ID '{product_id}' GEFUNDEN...")
             utime.sleep(1)
             main_menu()
@@ -330,11 +352,20 @@ while True:
     elif (condition == 10):
 
         # Produkt Ausgabe
-
-        motor_001.eine_umdrehung()
-
-
-
+        lcd.clear()
+        lcd.putstr("Bestellung wird ausgegeben...")
+        utime.sleep(0.5)
+        led_g.on()
+        led_r.on()
+        if (product_motor == "motor_001"):
+            motor_001.eine_umdrehung()
+        elif (product_motor == "motor_002"):
+            motor_002.eine_umdrehung()
+        
+        led_r.off()
+        led_g.off()
+        condition = 2
+        main_menu()
 
 
     elif (condition == 20):

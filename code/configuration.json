@@ -4,19 +4,22 @@
       "name": "Kartoffel Chipps",
       "item_id": "001",
       "slot_id": "001",
-      "price": "1,50"
+      "price": "1,50",
+      "motor_id": "motor_001"
     },
     {
       "name": "Harribo Bärchen",
       "item_id": "002",
       "slot_id": "002",
-      "price": "1,00"
+      "price": "1,00",
+      "motor_id": "motor_002"
     },
     {
       "name": "Schokolade",
       "item_id": "003",
       "slot_id": "003",
-      "price": "2,00"
+      "price": "2,00",
+      "motor": "motor_003"
     }
   ],
   "messages": {
