@@ -62,6 +62,7 @@ product_name = None
 product_price = None
 product_motor = None
 product_slot = None
+product_stock = None
 
 debug.println("Start variables setup finished", "INIT")
 
@@ -316,37 +317,54 @@ while True:
                 product_price = product['price']
                 product_name = product['name']
                 product_motor = product['motor_id']
+                product_stock = product['stock']
                 print(product_name)
                 break
             
-        if product_price and product_name:
+        if (product_stock != 0):
+            if product_price and product_name:
             
-            # Prüfen ob Produkt noch in Stock
+                # Prüfen ob Produkt noch in Stock
             
-            lcd.clear()
-            led_g.on()
-            lcd.putstr(str(product_id) + ":")
-            lcd.move_to(6,0)
-            lcd.putstr("EUR")
-            lcd.move_to(12,0)
-            lcd.putstr(str(product_price))
-            lcd.move_to(0,1)
-            lcd.putstr(product_name)
+                lcd.clear()
+                led_g.on()
+                lcd.putstr(str(product_id) + ":")
+                lcd.move_to(6,0)
+                lcd.putstr("EUR")
+                lcd.move_to(12,0)
+                lcd.putstr(str(product_price))
+                lcd.move_to(0,1)
+                lcd.putstr(product_name)
             
-            debug.println("Product found", "INFO")
-            condition = 7
-        else:
+                debug.println("Product found", "INFO")
+                condition = 7
+            else:
 
+                lcd.clear()
+                led_r.on()
+                lcd.putstr(f"ID {product_id}")
+                lcd.move_to(0,1)
+                lcd.putstr("EXISTIERT NICHT")
+                utime.sleep(2)
+                main_menu()
+                debug.println("Product not found", "ERROR")
+            
+                condition = 2
+                main_menu()
+        else:
             lcd.clear()
             led_r.on()
-            lcd.putstr(f"KEIN PRODUKT MIT ID '{product_id}' GEFUNDEN...")
-            utime.sleep(1)
-            main_menu()
-            debug.println("Product not found", "ERROR")
+            
+            lcd.putstr("PRODUKT NICHT IN STOCK...")
+            utime.sleep(2)
+            
             condition = 2
+            main_menu()
+            
     elif (condition == 7):
         
         # Geld eingabe
+        utime.sleep(2)
         condition = 10
 
     elif (condition == 10):
@@ -357,6 +375,7 @@ while True:
         utime.sleep(0.5)
         led_g.on()
         led_r.on()
+        
         if (product_motor == "motor_001"):
             motor_001.eine_umdrehung()
         elif (product_motor == "motor_002"):
@@ -364,13 +383,149 @@ while True:
         
         led_r.off()
         led_g.off()
+        
         condition = 2
         main_menu()
 
-
     elif (condition == 20):
+        
+        # Debug PW Enter
+        
+        if (key == '#'):
+            lcd.clear()
+            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            led_r.on()
+            
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+        
+        elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
+            
+            user_input = key
+            lcd.move_to(0,1)
+            lcd.putstr(user_input)
+            condition = 21
+            
+    elif (condition == 21):
+        
+        if (key == '#'):
+            lcd.clear()
+            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+        
+        elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
+            
+            lcd.clear()
+            lcd.putstr("DEBUG PASSWORD:")
+            
+            user_input += key
+            lcd.move_to(0,1)
+            lcd.putstr(user_input)
+            condition = 22
 
-        # Debug Password enter
-        print()
-
-
+    elif (condition == 22):
+        
+        if (key == '#'):
+            lcd.clear()
+            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            led_r.on()
+            
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+        
+        elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
+            
+            user_input += key
+            lcd.move_to(0,1)
+            lcd.putstr(user_input)
+            condition = 23
+            
+    elif (condition == 23):
+        
+        if (key == '#'):
+            lcd.clear()
+            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+        
+        elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
+            
+            lcd.clear()
+            lcd.putstr("DEBUG PASSWORD:")
+            
+            user_input += key
+            lcd.move_to(0,1)
+            lcd.putstr(user_input)
+            condition = 24
+    
+    elif (condition == 24):
+        
+        if (key == '#'):
+            lcd.clear()
+            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+        
+        elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
+            
+            lcd.clear()
+            lcd.putstr("DEBUG PASSWORD:")
+            
+            user_input += key
+            lcd.move_to(0,1)
+            lcd.putstr(user_input)
+            condition = 26
+    
+    elif (condition == 26):
+        
+        if (key == '#'):
+            lcd.clear()
+            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+        
+        elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
+            
+            lcd.clear()
+            lcd.putstr("EINGABE ZU LANG\nABBRUCH...")
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+        
+        elif (key == '*'):
+            
+            print("TREST")
+            
+            debug_code = config["codes"]["debug_mode"]
+            
+            if (user_input == debug_code):
+                lcd.clear()
+                lcd.putstr("Entered Debug mode")
+                condition = 30
+            
+            else:
+                lcd.clear()
+                lcd.putstr("Wrong code")
+                utime.sleep(2)
+                condition = 2
+                main_menu()
+            
