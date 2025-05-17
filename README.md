@@ -19,6 +19,7 @@
 | Servomotor             | Mechanismus zur Produktausgabe              |
 | Stromversorgung        | USB oder extern, je nach Aufbau             |
 | LEDs / Display (optional) | Anzeige von Statusinformationen oder Fehlern |
+| Holz                   | Ja auch Holz ist gefragt ;]                 |
 
 ## Software
 
