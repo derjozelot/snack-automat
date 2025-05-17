@@ -1,52 +1,56 @@
-# Intelligenter Süßigkeitenautomat 🍬🤖
+# SnackAutomat OS
 
-Ein Schulprojekt mit einem **Raspberry Pi Pico** und **MicroPython** zur Entwicklung eines intelligenten Süßigkeitenautomaten – wie bei einem echten Snackautomaten!  
-Erstellt von Jakob, Karim und Jonas mit dem Ziel, die **beste Note** durch Kreativität und Technik zu erreichen. 🎓
+## Was ist das?
+**SnackAutomat OS** ist ein modular aufgebautes System zur Steuerung eines selbstgebauten Süßigkeitenautomaten auf Basis des Raspberry Pi Pico. Ziel ist es, ein vollständig konfigurierbares System für Eingabe, Steuerung und Ausgabe zu entwickeln – optimiert für schulische und private Projekte.
 
-## 🔧 Funktionen
+## Features
 
-- 🧠 Steuerung mit MicroPython auf dem Raspberry Pi Pico
-- 🔢 9-stelliges Tastenfeld zur Codeeingabe
-- 🔓 Servomotor zur Freigabe der Süßigkeiten
-- 💡 Optionale LED- oder Display-Rückmeldung
+- Vollständig konfigurierbarer Automat (Konfigurationsdateien)
+- Codeeingabe über 9-stelliges Tastenfeld
+- Servogesteuerte Ausgabe der Süßigkeiten
+- Optionale Statusanzeige mit LEDs oder Display
 
-## 🎯 Projektziel
+## Hardware
 
-Ein funktionierender Prototyp eines Süßigkeitenautomaten, der:
-- Eine 9-stellige Nutzereingabe erkennt
-- Den Code überprüft und entsprechend Süßigkeiten freigibt
-- Modular und erweiterbar bleibt für spätere Upgrades
+| Komponente             | Funktion                                    |
+|------------------------|---------------------------------------------|
+| Raspberry Pi Pico      | Steuerung und Programmausführung            |
+| 9-stelliges Keypad     | Benutzereingabe (Produkt-IDs oder PINs)     |
+| Servomotor             | Mechanismus zur Produktausgabe              |
+| Stromversorgung        | USB oder extern, je nach Aufbau             |
+| LEDs / Display (optional) | Anzeige von Statusinformationen oder Fehlern |
 
-## 📦 Hardware-Komponenten
-
-| Bauteil                | Beschreibung                              |
-|------------------------|-------------------------------------------|
-| Raspberry Pi Pico      | Hauptcontroller mit MicroPython           |
-| 9-stelliges Keypad     | Zur Codeeingabe                           |
-| Servomotor             | Zum Auslösen des Mechanismus              |
-| Stromversorgung        | USB oder extern, je nach Aufbau           |
-| Optional: LEDs/Display | Zur Statusanzeige oder Fehleranzeige      |
-
-## 💻 Software
+## Software
 
 - **Sprache:** MicroPython  
-- **IDE:** Thonny
-- **Bibliotheken:** `machine`, `time`, eigen-geschriebene Libraries für Motor, Display, LEDs und dem Keypad
+- **Entwicklungsumgebung:** Thonny  
+- **Bibliotheken:**
+  - `machine`, `time`
+  - Eigene Module für Motorsteuerung, Tasteneingabe, LED-Steuerung und Display-Ausgabe
 
-## 👨‍🔧 Team
+## Aufbau & Architektur
 
-- **Karim** (Holzdesign + Bau des Automaten)
-- **Jakob** (Programmierung des Automaten mit Jonas)
-- **Jonas** (Spezifisch für die Bibliotheken und Zusatzfunktionen)
+Die Software ist modular aufgebaut:
+- `main.py`: Hauptlogik
+- `lib/`: Bibliotheken für Komponenten (Keypad, Motor, LEDs, etc.)
+- `config/`: Konfigurationsdateien zur Definition von Produkten, Passwörtern und Verhalten
 
-## 🎓 Zielsetzung
+## Team
 
-Das Projekt entsteht im Rahmen eines Schulprojekts mit dem Ziel, technisches Können, Teamarbeit und Kreativität zu vereinen – **für die Bestnote!**
+| Name     | Aufgabenbereich                      |
+|----------|--------------------------------------|
+| Karim    | Konstruktion, Holzdesign             |
+| Jakob    | Programmierung, Systemlogik          |
+| Jonas    | Entwicklung der Bibliotheken, Extras |
 
-## 📸 Medien
+## Ziel
 
-> Bilder, Videos oder Demos folgen im Laufe des Projekts.
+Dieses Projekt ist im Rahmen eines Schulprojekts entstanden und verbindet Hardwaresteuerung mit Softwareentwicklung. Es fördert technische Fähigkeiten, Teamarbeit und Kreativität.
+
+## Medien
+
+Screenshots, Aufbaupläne und Demonstrationen folgen im Verlauf des Projekts.
 
 ---
 
-**Mit ❤️ und viel Zucker entwickelt.**
+> Entwickelt mit Sorgfalt, Neugier und einer Prise Zucker.
