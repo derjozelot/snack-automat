@@ -1,55 +1,24 @@
 # SnackAutomat OS
 
 ## Was ist das?
-**SnackAutomat OS** ist ein modular aufgebautes System zur Steuerung eines selbstgebauten Süßigkeitenautomaten auf Basis des Raspberry Pi Pico. Ziel ist es, ein vollständig konfigurierbares System für Eingabe, Steuerung und Ausgabe zu entwickeln – optimiert für schulische und private Projekte.
 
-## Features
+Automat OS ist ein modulares Betriebssystem für Verkaufsautomaten auf Basis eines Raspberry Pi Pico mit MicroPython. Es bietet sämtliche Funktionen eines echten Automaten und ist vollständig konfigurierbar.
 
-- Vollständig konfigurierbarer Automat (Konfigurationsdateien)
-- Codeeingabe über 9-stelliges Tastenfeld
-- Servogesteuerte Ausgabe der Süßigkeiten
-- Optionale Statusanzeige mit LEDs oder Display
+## Funktionen
 
-## Hardware
+- Steuerung per 3x4 Keypad
+- Ausgabe über Servo-Motoren mit Treiber
+- Benutzerführung über LCD (I2C)
+- LED-Statusanzeigen mit einzelnen LEDs und LED-Strips
+- Konfigurierbar über JSON-Dateien
+- Admin-Modus mit Passwortschutz
+- Debug-Logging für Entwicklung und Fehleranalyse
 
-| Komponente             | Funktion                                    |
-|------------------------|---------------------------------------------|
-| Raspberry Pi Pico      | Steuerung und Programmausführung            |
-| 9-stelliges Keypad     | Benutzereingabe (Produkt-IDs oder PINs)     |
-| Servomotor             | Mechanismus zur Produktausgabe              |
-| Stromversorgung        | USB oder extern, je nach Aufbau             |
-| LEDs / Display (optional) | Anzeige von Statusinformationen oder Fehlern |
-| Holz                   | Ja auch Holz ist gefragt ;]                 |
+## Voraussetzungen
 
-## Software
-
-- **Sprache:** MicroPython  
-- **Entwicklungsumgebung:** Thonny  
-- **Alle möglichen Bibliotheken**
-
-## Aufbau & Architektur
-
-Die Software ist modular aufgebaut:
-- `main.py`: Hauptlogik
-- `lib/`: Bibliotheken für Komponenten (Keypad, Motor, LEDs, etc.)
-- `config/`: Konfigurationsdateien zur Definition von Produkten, Passwörtern und Verhalten
-
-## Team
-
-| Name     | Aufgabenbereich                      |
-|----------|--------------------------------------|
-| Karim    | Konstruktion, Holzdesign             |
-| Jakob    | Programmierung, Systemlogik          |
-| Jonas    | Entwicklung der Bibliotheken, Extras |
-
-## Ziel
-
-Dieses Projekt ist im Rahmen eines Schulprojekts entstanden und verbindet Hardwaresteuerung mit Softwareentwicklung. Es fördert technische Fähigkeiten, Teamarbeit und Kreativität.
-
-## Medien
-
-Screenshots, Aufbaupläne und Demonstrationen folgen im Verlauf des Projekts.
-
----
-
-> Entwickelt mit Sorgfalt, Neugier und einer Prise Zucker.
+- Raspberry Pi Pico
+- Servo-Motor(en) mit Motortreiber
+- 3x4 Keypad
+- LCD-Display (I2C)
+- LED-Strip (z. B. WS2812) und/oder einzelne LEDs
+- MicroPython (aktuelle Version für Raspberry Pi Pico)
