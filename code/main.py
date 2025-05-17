@@ -75,7 +75,7 @@ with open('configuration.json') as configuration:
 
 # Automat Variablen
 
-condition = 2 # condition = Zustand
+condition = 0 # condition = Zustand
 user_input = None
 error_code = None
 key = None
