@@ -25,9 +25,7 @@
 
 - **Sprache:** MicroPython  
 - **Entwicklungsumgebung:** Thonny  
-- **Bibliotheken:**
-  - `machine`, `time`
-  - Eigene Module für Motorsteuerung, Tasteneingabe, LED-Steuerung und Display-Ausgabe
+- **Alle möglichen Bibliotheken**
 
 ## Aufbau & Architektur
 
