@@ -57,3 +57,5 @@ class schrittmotor(object):
     def eine_umdrehung(self):
         for i in range(512):
             self.drehe_im_uhr()
+
+

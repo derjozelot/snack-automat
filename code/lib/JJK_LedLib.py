@@ -1,3 +1,12 @@
+#
+# Diese Library ist von uns selbst geschrieben worden.
+# Sie dient lediglich dazu, dass wir die Led Streifen alle Steuern können mit selbst programmierten Effekten
+#
+
+#
+# JJK Electronics©
+#
+
 from neopixel import NeoPixel
 from machine import Pin
 import utime
@@ -42,6 +51,15 @@ class LedStrip():
             return
         for i in range(self.num_leds):
             self.np[i] = (white, white, white)
+        self.np.write()
+    
+    def strip_yellow(self, brightness=1):
+        yellow = round(255 * brightness)
+        if (yellow > 255):
+            print("Error changing LED colour: Brightness cant be over 1")
+            return
+        for i in range(self.num_leds):
+            self.np[i] = (yellow, yellow, 0)
         self.np.write()
 
     def off(self):
@@ -90,8 +108,6 @@ class LedStrip():
             self.np[i] = (r, g, b)
 
         self.np.write()
-    
-            
 
     
     def leds_colour(self, led_1, led_2, r, g, b, brightness):
@@ -106,3 +122,4 @@ class LedStrip():
             self.np[i] = (red, green, blue)
         self.np.write()
         
+

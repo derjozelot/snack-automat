@@ -19,11 +19,14 @@ from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
 from DIYables_Pico_Keypad import Keypad
 from schrittmotorlib import schrittmotor
+from JJK_LedLib import LedStrip
 
 import debug
 import utime
 import random
 import json
+
+debug.save_log()
 
 debug.println("Imports loaded", "INIT")
 
@@ -53,6 +56,10 @@ keypad.set_debounce_time(400)
 motor_001 = schrittmotor(9,10,11,12)
 motor_002 = schrittmotor(13,14,15,16)
 
+led_front = LedStrip(19, 17)
+led_001 = LedStrip(20, 20)
+led_002 = LedStrip(21, 20)
+
 debug.println("Hardware setup finished", "INIT")
 
 # Produkt Variablen
@@ -61,21 +68,30 @@ product_id = None
 product_name = None
 product_price = None
 product_motor = None
-product_slot = None
 product_stock = None
 
 debug.println("Start variables setup finished", "INIT")
 
 # Software Setup
 
-with open('configuration.json') as configuration:
+with open('assets/configuration.json') as configuration:
     config = json.load(configuration)
     configuration.close()
     print(config)
 
+with open('assets/stock.json') as stock_data:
+    stock = json.load(stock_data)
+    stock_data.close()
+    print(stock_data)
+
+with open('assets/lang.json', encoding='utf-8') as lang_data:
+    lang = json.load(lang_data)
+    lang_data.close()
+    print(lang_data)
+
 # Automat Variablen
 
-condition = 0 # condition = Zustand
+condition = config['settings']['standard_condition'] # condition = Zustand
 user_input = None
 error_code = None
 key = None
@@ -87,19 +103,44 @@ def main_menu():
   led_r.off()
   lcd.clear()
   lcd.move_to(2,0)
-  lcd.putstr("Willkommen!")
+  lcd.putstr(lang['welcome'])
   lcd.move_to(0,1)
-  lcd.putstr("Bitte w\xE1hlen...")        
+  lcd.putstr(lang['please_choose'])        
   debug.println("Main menu loaded")
+
+def led_strips_off():
+    
+    led_front.off()
+    led_001.off()
+    led_002.off()
 
 def restart():
     global condition
+    
+    led_strips_off()
     condition = 0
     debug.println("Restart","SYSTEM")
 
 def get_uptime_seconds():
     uptime_ms = utime.ticks_ms() / 1000
     return round(uptime_ms, 2)
+
+def decrease_stock(item_id):
+    for product in stock["stock"]:
+        if product["item_id"] == item_id:
+            if product["stock"] > 0:
+                product["stock"] -= 1
+
+                with open("assets/stock.json", "w") as file:
+                    json.dump(stock, file)
+
+                return True
+            else:
+                return False
+
+    return False
+
+
 
 debug.println("System variables and definitions setup finished", "INIT")
 
@@ -120,7 +161,7 @@ while True:
         led_g.toggle()
         
         lcd.clear()
-        lcd.putstr("JJK Electronics")
+        lcd.putstr(lang['company_name'])
         lcd.move_to(0,1)
         lcd.putstr("Booting...")
         debug.println("System booting...", "BOOT")
@@ -128,7 +169,7 @@ while True:
         led_r.toggle()
         
         lcd.clear()
-        lcd.putstr("JJK Electronics")
+        lcd.putstr(lang['company_name'])
         lcd.move_to(0,1)
         lcd.putstr("Finished!")
         debug.println(f"System start finished after {get_uptime_seconds()}s", "BOOT")
@@ -139,26 +180,15 @@ while True:
         main_menu()
 
         # Zustand
-        condition = 2
+        condition = 1
 
         debug.println(f"Condition changed to {condition}", "DEBUG")
-        
+    
     elif (condition == 1):
         
-        # Error Zustand
-        led_r.on()
+        led_front.strip_white(0.5)
         
-        error_code = 404
-        lcd.clear()
-        lcd.putstr("Error Code: " + str(error_code))
-        debug.println(f"The system encountered an error: {str(error_code)}", "ERROR")
-        
-        utime.sleep(2)
-        main_menu()
-        
-        led_r.off()
         condition = 2
-
         debug.println(f"Condition changed to {condition}", "DEBUG")
         
     elif (condition == 2):
@@ -168,14 +198,15 @@ while True:
         if key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
           
             lcd.clear()
+            led_front.strip_colour(255, 180, 5)
 
             user_input = key
             lcd.move_to(0,0)
-            lcd.putstr("AUSWAHL:")
+            lcd.putstr(lang['selection'])
             lcd.move_to(13,0)
             lcd.putstr(user_input)
             lcd.move_to(0,1)
-            lcd.putstr("BETRIEBSBEREIT")
+            lcd.putstr(lang['ready'])
 
             debug.println(f"User input: {str(key)}", "INFO")
 
@@ -199,11 +230,11 @@ while True:
 
           user_input += key
           lcd.move_to(0,0)
-          lcd.putstr("AUSWAHL:")
+          lcd.putstr(lang['selection'])
           lcd.move_to(13,0)
           lcd.putstr(user_input)
           lcd.move_to(0,1)
-          lcd.putstr("BETRIEBSBEREIT")
+          lcd.putstr(lang['ready'])
 
           debug.println(f"User input: {str(key)}", "INFO")
           condition = 4
@@ -216,7 +247,7 @@ while True:
           user_input = None
           lcd.clear()
           led_r.on()
-          lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+          lcd.putstr(lang['cancel_pressed'])
           utime.sleep(1)
           lcd.clear()        
 
@@ -233,11 +264,11 @@ while True:
 
           user_input += key
           lcd.move_to(0,0)
-          lcd.putstr("AUSWAHL:")
+          lcd.putstr(lang['selection'])
           lcd.move_to(13,0)
           lcd.putstr(user_input)
           lcd.move_to(0,1)
-          lcd.putstr("BETRIEBSBEREIT")
+          lcd.putstr(lang['ready'])
 
           debug.println(f"User input: {str(key)}", "INFO")
           debug.println(f"Full user input: {user_input}", "INFO")
@@ -250,7 +281,7 @@ while True:
 
           user_input = None
           lcd.clear()
-          lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+          lcd.putstr(lang['cancel_pressed'])
           led_r.on()
           utime.sleep(1)
           lcd.clear()        
@@ -282,7 +313,7 @@ while True:
 
           user_input = None
           lcd.clear()
-          lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+          lcd.putstr(lang['cancel_pressed'])
           led_r.on()
           utime.sleep(1)
           lcd.clear()        
@@ -298,7 +329,7 @@ while True:
 
           user_input = None
           lcd.clear()
-          lcd.putstr("EINGABE ZU LANG\nABBRUCH...")
+          lcd.putstr(lang['input_too_long'])
           led_r.on()
           utime.sleep(1)
           lcd.clear()
@@ -317,61 +348,76 @@ while True:
                 product_price = product['price']
                 product_name = product['name']
                 product_motor = product['motor_id']
-                product_stock = product['stock']
-                print(product_name)
                 break
             
-        if (product_stock != 0):
-            if product_price and product_name:
+        for product in stock['stock']:
+            if product['item_id'] == product_id:
+                product_stock = product['stock']
+                break
+
             
+        if (product_price is not None and product_name is not None and product_motor is not None):
+            
+            debug.println(f"Product with ID '{product_id}' found. Name: '{product_name}', Price: '{product_price}', Motor: '{product_motor}'", "INFO")
+           
+            if (product_stock > 0):
                 # Prüfen ob Produkt noch in Stock
             
+                debug.println(f"Product in stock: {product_stock}", "INFO")
+                
                 lcd.clear()
                 led_g.on()
                 lcd.putstr(str(product_id) + ":")
                 lcd.move_to(6,0)
-                lcd.putstr("EUR")
+                lcd.putstr(lang['current'])
                 lcd.move_to(12,0)
                 lcd.putstr(str(product_price))
                 lcd.move_to(0,1)
                 lcd.putstr(product_name)
             
-                debug.println("Product found", "INFO")
                 condition = 7
+                debug.println(f"Condition changed to {condition}", "DEBUG")
             else:
-
                 lcd.clear()
                 led_r.on()
-                lcd.putstr(f"ID {product_id}")
-                lcd.move_to(0,1)
-                lcd.putstr("EXISTIERT NICHT")
+            
+                lcd.putstr(lang['product_not_in_stock'])
+                debug.println(f"Product not in stock", "ERROR")
                 utime.sleep(2)
-                main_menu()
-                debug.println("Product not found", "ERROR")
             
                 condition = 2
+                debug.println(f"Condition changed to {condition}", "DEBUG")
                 main_menu()
         else:
+            
             lcd.clear()
             led_r.on()
-            
-            lcd.putstr("PRODUKT NICHT IN STOCK...")
+            lcd.putstr(f"ID {product_id}")
+            lcd.move_to(0,1)
+            lcd.putstr(lang['product_not_exist'])
             utime.sleep(2)
+            debug.println(f"Product with ID '{product_id}' not found", "ERROR")
             
             condition = 2
+            debug.println(f"Condition changed to {condition}", "DEBUG")
             main_menu()
             
     elif (condition == 7):
         
         # Geld eingabe
+        debug.println(f"Waiting for pay...", "INFO")
+        
         utime.sleep(2)
+        debug.println(f"Product with ID '{product_id}' was bought...", "INFO")
         condition = 10
-
+        debug.println(f"Condition changed to {condition}", "DEBUG")
+        
     elif (condition == 10):
 
         # Produkt Ausgabe
         lcd.clear()
-        lcd.putstr("Bestellung wird ausgegeben...")
+        lcd.putstr(lang['product_issuing'])
+        debug.println(f"Product is being issued", "INFO")
         utime.sleep(0.5)
         led_g.on()
         led_r.on()
@@ -380,6 +426,13 @@ while True:
             motor_001.eine_umdrehung()
         elif (product_motor == "motor_002"):
             motor_002.eine_umdrehung()
+        else:
+            debug.println(f"Error with {product_motor}", "ERROR")
+        
+        debug.println(f"Product successfully issued", "INFO")
+        debug.println(f"New stock: '{product_stock - 1}'", "INFO")
+        
+        decrease_stock(product_id)
         
         led_r.off()
         led_g.off()
@@ -393,7 +446,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             
             utime.sleep(2)
@@ -412,7 +465,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
             
@@ -433,7 +486,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             
             utime.sleep(2)
@@ -452,7 +505,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
             
@@ -473,7 +526,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
             
@@ -494,7 +547,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            lcd.putstr("ABBRUCHTASTE GEDRÜCKT...")
+            lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
             
@@ -504,7 +557,7 @@ while True:
         elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
             
             lcd.clear()
-            lcd.putstr("EINGABE ZU LANG\nABBRUCH...")
+            lcd.putstr(lang['input_too_long'])
             led_r.on()
             utime.sleep(2)
             
@@ -512,8 +565,6 @@ while True:
             main_menu()
         
         elif (key == '*'):
-            
-            print("TREST")
             
             debug_code = config["codes"]["debug_mode"]
             
@@ -524,7 +575,7 @@ while True:
             
             else:
                 lcd.clear()
-                lcd.putstr("Wrong code")
+                lcd.putstr(lang['password_incorrect'])
                 utime.sleep(2)
                 condition = 2
                 main_menu()

@@ -7,6 +7,7 @@
 
 
 import utime
+import uos as os
 
 # Hiermit kann man einschalten ob 'DEBUG' getaggte Logs angezeigt werden sollen oder nicht
 debug = True
@@ -39,10 +40,32 @@ def println(message, level="INFO"):
     #print(f"[{timestamp}] [{level}] {message}")
     log_entry = f"[{timestamp}] [{level}] {message}"
 
-    with open('latest.log', 'a') as log_file:
+    with open('logs/latest.log', 'a') as log_file:
         log_file.write(log_entry + "\n")
     
     print(log_entry)
 
+def save_log():
+    log_dir = "/logs"
+    latest_log = log_dir + "/latest.log"
+
+    try:
+        os.stat(latest_log)
+    except OSError:
+        return  # Datei existiert nicht
+
+    i = 1
+    while True:
+        new_log = f"{log_dir}/{i}.log"
+        try:
+            os.stat(new_log)
+            i += 1
+        except OSError:
+            break
+
+    os.rename(latest_log, new_log)
+    print(f"Log wurde umbenannt in: {new_log}")
+
 if __name__ == "__main__":
     input("Hinweis: Diese Datei dient ausschließlich als Bibliothek und ist nicht für den direkten Zugriff bestimmt.\n\nDrücke Enter zum beenden...")
+

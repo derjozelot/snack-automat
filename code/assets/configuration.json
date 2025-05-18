@@ -1,0 +1,32 @@
+{
+    "products": [
+      {
+        "name": "Kartoffel Chipps",
+        "item_id": "001",
+        "slot_id": "001",
+        "price": "1,50",
+        "motor_id": "motor_001"
+      },
+      {
+        "name": "Harribo Baerchen",
+        "item_id": "002",
+        "slot_id": "002",
+        "price": "1,00",
+        "motor_id": "motor_002"
+      }
+    ],
+    "settings":
+        {
+            "standard_condition": 0
+        },
+    "codes": {
+      "debug_mode": "72819",
+      "led_effects": {
+        "rainbow_road": "187",
+        "red_erotic": "69",
+        "flash": "111",
+        "led_off": "876",
+        "led_on": "736"
+    }
+  }
+}  
