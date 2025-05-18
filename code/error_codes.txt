@@ -1,2 +1,0 @@
-404: Grundlegender Error
-110: Abbruch
