@@ -1,0 +1,42 @@
+[2025-05-20 10:45:52] [INIT] Imports loaded
+[2025-05-20 10:45:52] [INIT] Hardware setup finished
+[2025-05-20 10:45:52] [INIT] Start variables setup finished
+[2025-05-20 10:45:52] [INIT] Setup automat variables
+[2025-05-20 10:45:52] [INIT] System variables and definitions setup finished
+[2025-05-20 10:45:52] [BOOT] System starting...
+[2025-05-20 10:45:55] [BOOT] System booting...
+[2025-05-20 10:46:00] [BOOT] System start finished after 712.44s
+[2025-05-20 10:46:02] [DEBUG] Condition changed to 1
+[2025-05-20 10:46:03] [DEBUG] Condition changed to 2
+[2025-05-20 10:46:03] [INFO] Main menu loaded
+[2025-05-20 10:46:13] [INFO] User input: 0
+[2025-05-20 10:46:13] [DEBUG] Condition changed to 3
+[2025-05-20 10:46:14] [INFO] User input: 0
+[2025-05-20 10:46:14] [DEBUG] Condition changed to 4
+[2025-05-20 10:46:14] [INFO] User input: 0
+[2025-05-20 10:46:14] [INFO] Full user input: 000
+[2025-05-20 10:46:14] [DEBUG] Condition changed to 5
+[2025-05-20 10:46:16] [ERROR] To many characters
+[2025-05-20 10:46:16] [INFO] Main menu loaded
+[2025-05-20 10:46:16] [DEBUG] Condition changed to 2
+[2025-05-20 10:46:18] [INFO] User input: 0
+[2025-05-20 10:46:19] [DEBUG] Condition changed to 3
+[2025-05-20 10:46:19] [INFO] User input: 0
+[2025-05-20 10:46:19] [DEBUG] Condition changed to 4
+[2025-05-20 10:46:19] [INFO] User input: 1
+[2025-05-20 10:46:19] [INFO] Full user input: 001
+[2025-05-20 10:46:19] [DEBUG] Condition changed to 5
+[2025-05-20 10:46:20] [INFO] *: User confirmed input: 001
+[2025-05-20 10:46:20] [DEBUG] Condition changed to 6
+[2025-05-20 10:46:20] [INFO] Product with ID '001' found. Name: 'Kartoffel Chipps', Price: '1,50', Motor: 'motor_001'
+[2025-05-20 10:46:20] [INFO] Product in stock: 2
+[2025-05-20 10:46:20] [DEBUG] Condition changed to 7
+[2025-05-20 10:46:20] [INFO] Waiting for pay...
+[2025-05-20 10:46:22] [INFO] Product with ID '001' was bought...
+[2025-05-20 10:46:22] [DEBUG] Condition changed to 10
+[2025-05-20 10:46:22] [INFO] Product is being issued
+[2025-05-20 10:46:27] [INFO] Product successfully issued
+[2025-05-20 10:46:27] [INFO] New stock: '1'
+[2025-05-20 10:46:27] [INFO] Main menu loaded
+[2025-05-20 10:46:39] [INFO] Debug enter_password_screen loaded
+[2025-05-20 10:46:39] [DEBUG] Condition changed to 20

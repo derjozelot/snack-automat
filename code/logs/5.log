@@ -1,0 +1,49 @@
+[2025-05-20 11:06:46] [INIT] Imports loaded
+[2025-05-20 11:06:46] [INIT] Hardware setup finished
+[2025-05-20 11:06:46] [INIT] Start variables setup finished
+[2025-05-20 11:06:46] [INIT] Setup automat variables
+[2025-05-20 11:06:46] [INIT] System variables and definitions setup finished
+[2025-05-20 11:06:46] [BOOT] System starting...
+[2025-05-20 11:06:50] [BOOT] System booting...
+[2025-05-20 11:06:55] [BOOT] System start finished after 48.88s
+[2025-05-20 11:06:57] [DEBUG] Condition changed to 1
+[2025-05-20 11:06:58] [DEBUG] Condition changed to 2
+[2025-05-20 11:06:58] [INFO] Main menu loaded
+[2025-05-20 11:06:59] [INFO] User input: 0
+[2025-05-20 11:06:59] [DEBUG] Condition changed to 3
+[2025-05-20 11:06:59] [INFO] User input: 0
+[2025-05-20 11:06:59] [DEBUG] Condition changed to 4
+[2025-05-20 11:07:00] [INFO] User input: 2
+[2025-05-20 11:07:00] [INFO] Full user input: 002
+[2025-05-20 11:07:00] [DEBUG] Condition changed to 5
+[2025-05-20 11:07:00] [INFO] *: User confirmed input: 002
+[2025-05-20 11:07:00] [DEBUG] Condition changed to 6
+[2025-05-20 11:07:00] [INFO] Product with ID '002' found. Name: 'Harribo Baerchen', Price: '1,00', Motor: 'motor_002'
+[2025-05-20 11:07:00] [INFO] Product in stock: 10
+[2025-05-20 11:07:00] [DEBUG] Condition changed to 7
+[2025-05-20 11:07:00] [INFO] Waiting for pay...
+[2025-05-20 11:07:02] [INFO] Product with ID '002' was bought...
+[2025-05-20 11:07:02] [DEBUG] Condition changed to 10
+[2025-05-20 11:07:02] [INFO] Product is being issued
+[2025-05-20 11:07:07] [INFO] Product successfully issued
+[2025-05-20 11:07:07] [INFO] New stock: '9'
+[2025-05-20 11:07:07] [INFO] Main menu loaded
+[2025-05-20 11:07:20] [INFO] User input: 0
+[2025-05-20 11:07:20] [DEBUG] Condition changed to 3
+[2025-05-20 11:07:20] [INFO] User input: 0
+[2025-05-20 11:07:20] [DEBUG] Condition changed to 4
+[2025-05-20 11:07:20] [INFO] User input: 2
+[2025-05-20 11:07:21] [INFO] Full user input: 002
+[2025-05-20 11:07:21] [DEBUG] Condition changed to 5
+[2025-05-20 11:07:21] [INFO] *: User confirmed input: 002
+[2025-05-20 11:07:21] [DEBUG] Condition changed to 6
+[2025-05-20 11:07:21] [INFO] Product with ID '002' found. Name: 'Harribo Baerchen', Price: '1,00', Motor: 'motor_002'
+[2025-05-20 11:07:21] [INFO] Product in stock: 9
+[2025-05-20 11:07:21] [DEBUG] Condition changed to 7
+[2025-05-20 11:07:21] [INFO] Waiting for pay...
+[2025-05-20 11:07:23] [INFO] Product with ID '002' was bought...
+[2025-05-20 11:07:24] [DEBUG] Condition changed to 10
+[2025-05-20 11:07:24] [INFO] Product is being issued
+[2025-05-20 11:07:28] [INFO] Product successfully issued
+[2025-05-20 11:07:29] [INFO] New stock: '8'
+[2025-05-20 11:07:29] [INFO] Main menu loaded

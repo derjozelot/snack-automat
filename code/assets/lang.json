@@ -1,20 +1,18 @@
 {
-    "welcome": "Willkommen!",
-    "please_choose": "Bitte waehlen...",
-    "company_name": "JJK Electronics",
-    "ready": "BETRIEBSBEREIT",
-    "selection": "AUSWAHL:",
-    "cancel_pressed": "ABBRUCHTASTE   GEDRUECKT...",
-    "product_not_in_stock": "PRODUKT NICHT   VERFUEGBAR...",
-    "product_not_exist": "EXISTIERT NICHT",
-    "waiting_for_payment": "Warte auf Bezahlung...",
-    "product_issuing": "Bestellung wird ausgegeben...",
-    "input_too_long": "EINGABE ZU LANG ABBRUCH...",
-    "password_incorrect": "Passwort falsch!",
-    "unknown_error": "Unbekannter Fehler",
-    "current": "EUR",
-    "abort": "Abbruch",
-    "product_out_of_stock": "Produkt nicht verfügbar"
-  }
-  
-  
+  "welcome": "Willkommen!",
+  "please_choose": "Bitte waehlen...",
+  "company_name": "JJK Electronics",
+  "ready": "BETRIEBSBEREIT",
+  "selection": "AUSWAHL:",
+  "cancel_pressed": "ABBRUCHTASTE   GEDRUECKT...",
+  "product_not_in_stock": "PRODUKT NICHT   VERFUEGBAR...",
+  "product_not_exist": "EXISTIERT NICHT",
+  "waiting_for_payment": "Warte auf Bezahlung...",
+  "product_issuing": "Bestellung wird ausgegeben...",
+  "input_too_long": "EINGABE ZU LANG ABBRUCH...",
+  "password_incorrect": "Passwort falsch!",
+  "unknown_error": "Unbekannter Fehler",
+  "current": "EUR",
+  "abort": "Abbruch",
+  "product_out_of_stock": "Produkt nicht verfügbar"
+}

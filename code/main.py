@@ -18,7 +18,7 @@ from time import sleep_ms
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
 from DIYables_Pico_Keypad import Keypad
-from schrittmotorlib import schrittmotor
+from JJK_StepperLib import StepperMotor
 from JJK_LedLib import LedStrip
 
 import debug
@@ -53,8 +53,8 @@ KEYMAP = ['1', '2', '3',
 keypad = Keypad(KEYMAP, ROW_PINS, COLUMN_PINS, NUM_ROWS, NUM_COLS)
 keypad.set_debounce_time(400)
 
-motor_001 = schrittmotor(9,10,11,12)
-motor_002 = schrittmotor(13,14,15,16)
+motor_001 = StepperMotor(9,10,11,12)
+motor_002 = StepperMotor(13,14,15,16)
 
 led_front = LedStrip(19, 17)
 led_001 = LedStrip(20, 20)
@@ -99,14 +99,15 @@ key = None
 debug.println("Setup automat variables", "INIT")
 
 def main_menu():
-  led_g.off()
-  led_r.off()
-  lcd.clear()
-  lcd.move_to(2,0)
-  lcd.putstr(lang['welcome'])
-  lcd.move_to(0,1)
-  lcd.putstr(lang['please_choose'])        
-  debug.println("Main menu loaded")
+    led_front.strip_white(0.5)
+    led_g.off()
+    led_r.off()
+    lcd.clear()
+    lcd.move_to(2,0)
+    lcd.putstr(lang['welcome'])
+    lcd.move_to(0,1)
+    lcd.putstr(lang['please_choose'])        
+    debug.println("Main menu loaded")
 
 def led_strips_off():
     
@@ -140,8 +141,40 @@ def decrease_stock(item_id):
 
     return False
 
+def start_led_animation():
+    led_front.led_colour(1, 255, 255, 255, 0.5)
+    led_front.led_colour(17, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(2, 255, 255, 255, 0.5)
+    led_front.led_colour(16, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(3, 255, 255, 255, 0.5)
+    led_front.led_colour(15, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(4, 255, 255, 255, 0.5)
+    led_front.led_colour(14, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(5, 255, 255, 255, 0.5)
+    led_front.led_colour(13, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(6, 255, 255, 255, 0.5)
+    led_front.led_colour(12, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(7, 255, 255, 255, 0.5)
+    led_front.led_colour(11, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(7, 255, 255, 255, 0.5)
+    led_front.led_colour(11, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(8, 255, 255, 255, 0.5)
+    led_front.led_colour(10, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_front.led_colour(9, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    
 
 
+led_strips_off()
 debug.println("System variables and definitions setup finished", "INIT")
 
 # Automat Logik 
@@ -177,7 +210,6 @@ while True:
         led_r.toggle()
         led_g.toggle()
         
-        main_menu()
 
         # Zustand
         condition = 1
@@ -185,11 +217,11 @@ while True:
         debug.println(f"Condition changed to {condition}", "DEBUG")
     
     elif (condition == 1):
-        
-        led_front.strip_white(0.5)
-        
+    
+        start_led_animation()
         condition = 2
         debug.println(f"Condition changed to {condition}", "DEBUG")
+        main_menu()
         
     elif (condition == 2):
         
@@ -218,6 +250,7 @@ while True:
             lcd.clear()
             lcd.putstr("DEBUG PASSWORD:")
 
+            led_front.strip_gradient((250, 35, 27),(250, 127, 27))
             condition = 20
             debug.println("Debug enter_password_screen loaded", "INFO")
             debug.println(f"Condition changed to {condition}", "DEBUG")
@@ -247,6 +280,7 @@ while True:
           user_input = None
           lcd.clear()
           led_r.on()
+          led_front.strip_red(0.5)
           lcd.putstr(lang['cancel_pressed'])
           utime.sleep(1)
           lcd.clear()        
@@ -281,6 +315,7 @@ while True:
 
           user_input = None
           lcd.clear()
+          led_front.strip_red(0.5)
           lcd.putstr(lang['cancel_pressed'])
           led_r.on()
           utime.sleep(1)
@@ -298,7 +333,7 @@ while True:
         if (key == '*'):
 
           # Bestätigung
-
+          
           lcd.clear()
           product_id = user_input
           user_input = None
@@ -313,6 +348,7 @@ while True:
 
           user_input = None
           lcd.clear()
+          led_front.strip_red(0.5)
           lcd.putstr(lang['cancel_pressed'])
           led_r.on()
           utime.sleep(1)
@@ -329,6 +365,7 @@ while True:
 
           user_input = None
           lcd.clear()
+          led_front.strip_red(0.5)
           lcd.putstr(lang['input_too_long'])
           led_r.on()
           utime.sleep(1)
@@ -342,7 +379,7 @@ while True:
     elif (condition == 6):
 
           # Produkt Suche
-
+          
         for product in config['products']:
             if product['item_id'] == product_id:
                 product_price = product['price']
@@ -364,7 +401,7 @@ while True:
                 # Prüfen ob Produkt noch in Stock
             
                 debug.println(f"Product in stock: {product_stock}", "INFO")
-                
+                led_front.strip_white(0.5)
                 lcd.clear()
                 led_g.on()
                 lcd.putstr(str(product_id) + ":")
@@ -380,7 +417,7 @@ while True:
             else:
                 lcd.clear()
                 led_r.on()
-            
+                led_front.strip_red(0.5)
                 lcd.putstr(lang['product_not_in_stock'])
                 debug.println(f"Product not in stock", "ERROR")
                 utime.sleep(2)
@@ -391,6 +428,7 @@ while True:
         else:
             
             lcd.clear()
+            led_front.strip_red(0.5)
             led_r.on()
             lcd.putstr(f"ID {product_id}")
             lcd.move_to(0,1)
@@ -405,6 +443,7 @@ while True:
     elif (condition == 7):
         
         # Geld eingabe
+        led_front.strip_white(0.5)
         debug.println(f"Waiting for pay...", "INFO")
         
         utime.sleep(2)
@@ -423,9 +462,9 @@ while True:
         led_r.on()
         
         if (product_motor == "motor_001"):
-            motor_001.eine_umdrehung()
+            motor_001.one_rotate()
         elif (product_motor == "motor_002"):
-            motor_002.eine_umdrehung()
+            motor_002.one_rotate()
         else:
             debug.println(f"Error with {product_motor}", "ERROR")
         
@@ -447,6 +486,7 @@ while True:
         if (key == '#'):
             lcd.clear()
             lcd.putstr(lang['cancel_pressed'])
+            led_front.strip_red(0.5)
             led_r.on()
             
             utime.sleep(2)
@@ -465,6 +505,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
+            led_front.strip_red(0.5)
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
@@ -486,6 +527,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
+            led_front.strip_red(0.5)
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             
@@ -505,6 +547,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
+            led_front.strip_red(0.5)
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
@@ -526,6 +569,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
+            led_front.strip_red(0.5)
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
@@ -546,6 +590,7 @@ while True:
     elif (condition == 26):
         
         if (key == '#'):
+            led_front.strip_white(0.5)
             lcd.clear()
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
@@ -557,6 +602,7 @@ while True:
         elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
             
             lcd.clear()
+            led_front.strip_red(0.5)
             lcd.putstr(lang['input_too_long'])
             led_r.on()
             utime.sleep(2)
@@ -569,6 +615,7 @@ while True:
             debug_code = config["codes"]["debug_mode"]
             
             if (user_input == debug_code):
+                led_front.strip_gradient((2, 138, 191),(2, 204, 123))
                 lcd.clear()
                 lcd.putstr("Entered Debug mode")
                 condition = 30

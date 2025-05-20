@@ -68,4 +68,3 @@ def save_log():
 
 if __name__ == "__main__":
     input("Hinweis: Diese Datei dient ausschließlich als Bibliothek und ist nicht für den direkten Zugriff bestimmt.\n\nDrücke Enter zum beenden...")
-

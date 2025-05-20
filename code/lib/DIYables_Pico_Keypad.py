@@ -73,4 +73,3 @@ class Keypad:
 
     def set_debounce_time(self, time_ms):
         self._debounce_time = time_ms
-

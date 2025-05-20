@@ -1,0 +1,65 @@
+[2025-05-20 10:44:06] [INIT] Imports loaded
+[2025-05-20 10:44:06] [INIT] Hardware setup finished
+[2025-05-20 10:44:06] [INIT] Start variables setup finished
+[2025-05-20 10:44:06] [INIT] Setup automat variables
+[2025-05-20 10:44:06] [INIT] System variables and definitions setup finished
+[2025-05-20 10:44:06] [BOOT] System starting...
+[2025-05-20 10:44:08] [BOOT] System booting...
+[2025-05-20 10:44:12] [BOOT] System start finished after 603.7s
+[2025-05-20 10:44:14] [DEBUG] Condition changed to 1
+[2025-05-20 10:44:15] [DEBUG] Condition changed to 2
+[2025-05-20 10:44:15] [INFO] Main menu loaded
+[2025-05-20 10:44:17] [INFO] User input: 0
+[2025-05-20 10:44:17] [DEBUG] Condition changed to 3
+[2025-05-20 10:44:18] [INFO] User input: 0
+[2025-05-20 10:44:18] [DEBUG] Condition changed to 4
+[2025-05-20 10:44:19] [INFO] User input: 2
+[2025-05-20 10:44:19] [INFO] Full user input: 002
+[2025-05-20 10:44:19] [DEBUG] Condition changed to 5
+[2025-05-20 10:44:20] [INFO] *: User confirmed input: 002
+[2025-05-20 10:44:20] [DEBUG] Condition changed to 6
+[2025-05-20 10:44:20] [INFO] Product with ID '002' found. Name: 'Harribo Baerchen', Price: '1,00', Motor: 'motor_002'
+[2025-05-20 10:44:20] [INFO] Product in stock: 3
+[2025-05-20 10:44:20] [DEBUG] Condition changed to 7
+[2025-05-20 10:44:21] [INFO] Waiting for pay...
+[2025-05-20 10:44:23] [INFO] Product with ID '002' was bought...
+[2025-05-20 10:44:23] [DEBUG] Condition changed to 10
+[2025-05-20 10:44:23] [INFO] Product is being issued
+[2025-05-20 10:44:28] [INFO] Product successfully issued
+[2025-05-20 10:44:28] [INFO] New stock: '2'
+[2025-05-20 10:44:28] [INFO] Main menu loaded
+[2025-05-20 10:44:29] [INFO] User input: 0
+[2025-05-20 10:44:29] [DEBUG] Condition changed to 3
+[2025-05-20 10:44:30] [INFO] User input: 0
+[2025-05-20 10:44:30] [DEBUG] Condition changed to 4
+[2025-05-20 10:44:30] [INFO] User input: 1
+[2025-05-20 10:44:30] [INFO] Full user input: 001
+[2025-05-20 10:44:31] [DEBUG] Condition changed to 5
+[2025-05-20 10:44:31] [INFO] *: User confirmed input: 001
+[2025-05-20 10:44:32] [DEBUG] Condition changed to 6
+[2025-05-20 10:44:32] [INFO] Product with ID '001' found. Name: 'Kartoffel Chipps', Price: '1,50', Motor: 'motor_001'
+[2025-05-20 10:44:32] [INFO] Product in stock: 3
+[2025-05-20 10:44:32] [DEBUG] Condition changed to 7
+[2025-05-20 10:44:32] [INFO] Waiting for pay...
+[2025-05-20 10:44:34] [INFO] Product with ID '001' was bought...
+[2025-05-20 10:44:34] [DEBUG] Condition changed to 10
+[2025-05-20 10:44:34] [INFO] Product is being issued
+[2025-05-20 10:44:39] [INFO] Product successfully issued
+[2025-05-20 10:44:39] [INFO] New stock: '2'
+[2025-05-20 10:44:39] [INFO] Main menu loaded
+[2025-05-20 10:44:54] [INFO] User input: 0
+[2025-05-20 10:44:54] [DEBUG] Condition changed to 3
+[2025-05-20 10:44:54] [INFO] User input: 0
+[2025-05-20 10:44:54] [DEBUG] Condition changed to 4
+[2025-05-20 10:44:55] [INFO] User input: 1
+[2025-05-20 10:44:55] [INFO] Full user input: 001
+[2025-05-20 10:44:55] [DEBUG] Condition changed to 5
+[2025-05-20 10:44:55] [INFO] *: User confirmed input: 001
+[2025-05-20 10:44:55] [DEBUG] Condition changed to 6
+[2025-05-20 10:44:55] [INFO] Product with ID '001' found. Name: 'Kartoffel Chipps', Price: '1,50', Motor: 'motor_001'
+[2025-05-20 10:44:55] [INFO] Product in stock: 2
+[2025-05-20 10:44:55] [DEBUG] Condition changed to 7
+[2025-05-20 10:44:55] [INFO] Waiting for pay...
+[2025-05-20 10:44:57] [INFO] Product with ID '001' was bought...
+[2025-05-20 10:44:57] [DEBUG] Condition changed to 10
+[2025-05-20 10:44:57] [INFO] Product is being issued
