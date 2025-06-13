@@ -105,9 +105,9 @@ current_pay_time = None
 debug.println("Setup automat variables", "INIT")
 
 def main_menu():
-    led_front.strip_white(0.5)
-    led_001.strip_white(0.5)
-    led_002.strip_white(0.5)
+    led_front.strip_white(stock['led_brightness']['led_front'])
+    led_001.strip_white(stock['led_brightness']['led_001'])
+    led_002.strip_white(stock['led_brightness']['led_002'])
     led_g.off()
     led_r.off()
     lcd.clear()
@@ -145,81 +145,153 @@ def decrease_stock(item_id):
                 return True
             else:
                 return False
+            
+    return False
+
+
+def increase_stock(item_id):
+    for product in stock["stock"]:
+        if product["item_id"] == item_id:
+            if product["stock"] >= 0:
+                product["stock"] += 1
+
+                with open("assets/stock.json", "w") as file:
+                    json.dump(stock, file)
+
+                return True
+            else:
+                return False
+            
+    return False
+
+def decrease_brightness(led_id):
+    if led_id == "led_front":
+        if stock['led_brightness']['led_front'] > 0:
+            stock['led_brightness']['led_front'] = round(stock['led_brightness']['led_front'] - 0.1, 1)
+        
+        with open("assets/stock.json", "w") as file:
+            json.dump(stock, file)
+
+        return True
+    elif led_id == "led_001":
+        if stock['led_brightness']['led_001'] > 0:
+            stock['led_brightness']['led_001'] = round(stock['led_brightness']['led_002'] - 0.1, 1)
+        
+        with open("assets/stock.json", "w") as file:
+            json.dump(stock, file)
+
+        return True
+    elif led_id == "led_002":
+        if stock['led_brightness']['led_002'] > 0:
+            stock['led_brightness']['led_002'] = round(stock['led_brightness']['led_002'] - 0.1, 1)
+        
+        with open("assets/stock.json", "w") as file:
+            json.dump(stock, file)
+
+        return True
+
+    return False
+
+def increase_brightness(led_id):
+    if led_id == "led_front":
+        if stock['led_brightness']['led_front'] >= 0:
+            stock['led_brightness']['led_front'] = round(stock['led_brightness']['led_front'] + 0.1, 1)
+        
+        with open("assets/stock.json", "w") as file:
+            json.dump(stock, file)
+
+        return True
+    elif led_id == "led_001":
+        if stock['led_brightness']['led_001'] >= 0:
+            stock['led_brightness']['led_001'] = round(stock['led_brightness']['led_001'] + 0.1, 1)
+        
+        with open("assets/stock.json", "w") as file:
+            json.dump(stock, file)
+
+        return True
+    elif led_id == "led_002":
+        if stock['led_brightness']['led_002'] >= 0:
+            stock['led_brightness']['led_002'] = round(stock['led_brightness']['led_002'] + 0.1, 1)
+        
+        with open("assets/stock.json", "w") as file:
+            json.dump(stock, file)
+
+        return True
 
     return False
 
 def start_led_animation():
-    led_001.led_colour(1, 255, 255, 255, 0.5)
-    led_002.led_colour(1, 255, 255, 255, 0.5)
+    led_001.led_colour(1, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(1, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(2, 255, 255, 255, 0.5)
-    led_002.led_colour(2, 255, 255, 255, 0.5)
+    led_001.led_colour(2, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(2, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(3, 255, 255, 255, 0.5)
-    led_002.led_colour(3, 255, 255, 255, 0.5)
+    led_001.led_colour(3, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(3, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(4, 255, 255, 255, 0.5)
-    led_002.led_colour(4, 255, 255, 255, 0.5)
+    led_001.led_colour(4, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(4, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(5, 255, 255, 255, 0.5)
-    led_002.led_colour(5, 255, 255, 255, 0.5)
+    led_001.led_colour(5, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(5, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(6, 255, 255, 255, 0.5)
-    led_002.led_colour(6, 255, 255, 255, 0.5)
+    led_001.led_colour(6, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(6, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(7, 255, 255, 255, 0.5)
-    led_002.led_colour(7, 255, 255, 255, 0.5)
+    led_001.led_colour(7, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(7, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(8, 255, 255, 255, 0.5)
-    led_002.led_colour(8, 255, 255, 255, 0.5)
+    led_001.led_colour(8, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(8, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(9, 255, 255, 255, 0.5)
-    led_002.led_colour(9, 255, 255, 255, 0.5)
+    led_001.led_colour(9, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(9, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(10, 255, 255, 255, 0.5)
-    led_002.led_colour(10, 255, 255, 255, 0.5)
+    led_001.led_colour(10, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(10, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(11, 255, 255, 255, 0.5)
-    led_002.led_colour(11, 255, 255, 255, 0.5)
+    led_001.led_colour(11, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(11, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(12, 255, 255, 255, 0.5)
-    led_002.led_colour(12, 255, 255, 255, 0.5)
+    led_001.led_colour(12, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(12, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(13, 255, 255, 255, 0.5)
-    led_002.led_colour(13, 255, 255, 255, 0.5)
+    led_001.led_colour(13, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(13, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.1)
-    led_001.led_colour(14, 255, 255, 255, 0.5)
-    led_002.led_colour(14, 255, 255, 255, 0.5)
+    led_001.led_colour(14, 255, 255, 255, stock['led_brightness']['led_001'])
+    led_002.led_colour(14, 255, 255, 255, stock['led_brightness']['led_002'])
     utime.sleep(0.05)
 
-    led_front.led_colour(1, 255, 255, 255, 0.5)
-    led_front.led_colour(17, 255, 255, 255, 0.5)
+    led_front.led_colour(1, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(17, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(2, 255, 255, 255, 0.5)
-    led_front.led_colour(16, 255, 255, 255, 0.5)
+    led_front.led_colour(2, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(16, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(3, 255, 255, 255, 0.5)
-    led_front.led_colour(15, 255, 255, 255, 0.5)
+    led_front.led_colour(3, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(15, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(4, 255, 255, 255, 0.5)
-    led_front.led_colour(14, 255, 255, 255, 0.5)
+    led_front.led_colour(4, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(14, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(5, 255, 255, 255, 0.5)
-    led_front.led_colour(13, 255, 255, 255, 0.5)
+    led_front.led_colour(5, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(13, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(6, 255, 255, 255, 0.5)
-    led_front.led_colour(12, 255, 255, 255, 0.5)
+    led_front.led_colour(6, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(12, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(7, 255, 255, 255, 0.5)
-    led_front.led_colour(11, 255, 255, 255, 0.5)
+    led_front.led_colour(7, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(11, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(7, 255, 255, 255, 0.5)
-    led_front.led_colour(11, 255, 255, 255, 0.5)
+    led_front.led_colour(7, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(11, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(8, 255, 255, 255, 0.5)
-    led_front.led_colour(10, 255, 255, 255, 0.5)
+    led_front.led_colour(8, 255, 255, 255, stock['led_brightness']['led_front'])
+    led_front.led_colour(10, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
-    led_front.led_colour(9, 255, 255, 255, 0.5)
+    led_front.led_colour(9, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
     
 
@@ -280,7 +352,7 @@ while True:
         if key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
           
             lcd.clear()
-            led_front.strip_colour(255, 180, 5)
+            led_front.strip_colour(255, 180, 5, stock['led_brightness']['led_front'])
 
             user_input = key
             lcd.move_to(0,0)
@@ -332,7 +404,7 @@ while True:
           user_input = None
           lcd.clear()
           led_r.on()
-          led_front.strip_red(0.5)
+          led_front.strip_red(stock['led_brightness']['led_front'])
           lcd.putstr(lang['cancel_pressed'])
           utime.sleep(1)
           lcd.clear()        
@@ -367,7 +439,7 @@ while True:
 
           user_input = None
           lcd.clear()
-          led_front.strip_red(0.5)
+          led_front.strip_red(stock['led_brightness']['led_front'])
           lcd.putstr(lang['cancel_pressed'])
           led_r.on()
           utime.sleep(1)
@@ -400,7 +472,7 @@ while True:
 
           user_input = None
           lcd.clear()
-          led_front.strip_red(0.5)
+          led_front.strip_red(stock['led_brightness']['led_front'])
           lcd.putstr(lang['cancel_pressed'])
           led_r.on()
           utime.sleep(1)
@@ -417,7 +489,7 @@ while True:
 
           user_input = None
           lcd.clear()
-          led_front.strip_red(0.5)
+          led_front.strip_red(stock['led_brightness']['led_front'])
           lcd.putstr(lang['input_too_long'])
           led_r.on()
           utime.sleep(1)
@@ -453,7 +525,7 @@ while True:
                 # Prüfen ob Produkt noch in Stock
             
                 debug.println(f"Product in stock: {product_stock}", "INFO")
-                led_front.strip_white(0.5)
+                led_front.strip_white(stock['led_brightness']['led_front'])
                 lcd.clear()
                 led_g.on()
                 lcd.putstr(str(product_id) + ":")
@@ -465,11 +537,11 @@ while True:
                 lcd.putstr(product_name)
 
                 if (product_motor == "motor_001"):
-                    led_001.strip_green(0.5)
-                    led_002.strip_white(0.25)
+                    led_001.strip_green(stock['led_brightness']['led_001'])
+                    led_002.strip_white(stock['led_brightness']['led_002'] * 0.5)
                 elif (product_motor == "motor_002"):
-                    led_002.strip_green(0.5)
-                    led_001.strip_white(0.25)
+                    led_002.strip_green(stock['led_brightness']['led_002'])
+                    led_001.strip_white(stock['led_brightness']['led_001'] * 0.5)
             
                 pay_multiplier = config['settings']['max_time_at_pay']
                 pay_start_time = utime.ticks_ms()
@@ -480,16 +552,16 @@ while True:
             else:
                 lcd.clear()
                 led_r.on()
-                led_front.strip_white(0.5)
+                led_front.strip_white(stock['led_brightness']['led_front'])
                 lcd.putstr(lang['product_not_in_stock'])
                 debug.println(f"Product not in stock", "ERROR")
 
                 if (product_motor == "motor_001"):
-                    led_001.strip_red(0.5)
-                    led_002.strip_white(0.25)
+                    led_001.strip_red(stock['led_brightness']['led_001'])
+                    led_002.strip_white(stock['led_brightness']['led_002'] * 0.5)
                 elif (product_motor == "motor_002"):
-                    led_002.strip_red(0.5)
-                    led_001.strip_white(0.25)
+                    led_002.strip_red(stock['led_brightness']['led_front'])
+                    led_001.strip_white(stock['led_brightness']['led_front'] * 0.5)
 
                 utime.sleep(2)
             
@@ -499,7 +571,7 @@ while True:
         else:
             
             lcd.clear()
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             led_r.on()
             lcd.putstr(f"ID {product_id}")
             lcd.move_to(0,1)
@@ -517,7 +589,7 @@ while True:
         current_pay_time = utime.ticks_ms()
         
         # Geld eingabe
-        led_front.strip_white(0.5)
+        led_front.strip_white(stock['led_brightness']['led_front'])
         debug.println(f"Waiting for pay...", "INFO")
         
         if (key == "*"):
@@ -547,11 +619,11 @@ while True:
             lcd.clear()
             lcd.putstr(lang['waited_too_long'])
             if (product_motor == "motor_001"):
-                led_001.strip_red(0.5)
-                led_002.strip_white(0.25)
+                led_001.strip_red(stock['led_brightness']['led_001'])
+                led_002.strip_white(stock['led_brightness']['led_002'] * 0.5)
             elif (product_motor == "motor_002"):
-                led_002.strip_red(0.5)
-                led_001.strip_white(0.25)
+                led_002.strip_red(stock['led_brightness']['led_002'])
+                led_001.strip_white(stock['led_brightness']['led_f001'] * 0.5)
             
             utime.sleep(2)            
             
@@ -569,10 +641,10 @@ while True:
         led_r.on()
         
         if (product_motor == "motor_001"):
-            led_001.strip_colour(255, 180, 5)
+            led_001.strip_colour(255, 180, 5, stock['led_brightness']['led_001'])
             motor_001.one_rotate()
         elif (product_motor == "motor_002"):
-            led_002.strip_colour(255, 180, 5)
+            led_002.strip_colour(255, 180, 5, stock['led_brightness']['led_002'])
             motor_002.one_rotate()
         else:
             debug.println(f"Error with {product_motor}", "ERROR")
@@ -602,7 +674,7 @@ while True:
         if (key == '#'):
             lcd.clear()
             lcd.putstr(lang['cancel_pressed'])
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             led_r.on()
             
             utime.sleep(2)
@@ -621,7 +693,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
@@ -643,7 +715,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             
@@ -663,7 +735,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
@@ -685,7 +757,7 @@ while True:
         
         if (key == '#'):
             lcd.clear()
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
@@ -706,7 +778,7 @@ while True:
     elif (condition == 26):
         
         if (key == '#'):
-            led_front.strip_white(0.5)
+            led_front.strip_white(stock['led_brightness']['led_front'])
             lcd.clear()
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
@@ -718,7 +790,7 @@ while True:
         elif key in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
             
             lcd.clear()
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             lcd.putstr(lang['input_too_long'])
             led_r.on()
             utime.sleep(2)
@@ -747,10 +819,10 @@ while True:
                 condition = 2
                 main_menu()
     
-    elif (condition == 30):
-        if (key == "#"):
+    elif (condition == 30): # Start Zustand des Debugs
+        if (key == "#"): # Zurück ins Main Menu
             lcd.clear()
-            led_front.strip_red(0.5)
+            led_front.strip_red(stock['led_brightness']['led_front'])
             lcd.putstr(lang['cancel_pressed'])
             led_r.on()
             utime.sleep(2)
@@ -768,10 +840,14 @@ while True:
                 condition = 32
         
         elif (key == "*"): # Enter Stock Settings
+                for product in stock['stock']:
+                    if product['item_id'] == "001":
+                        product_stock = product['stock']
+                        break
                 lcd.clear()
                 lcd.putstr("[Stock Settings]")
                 lcd.move_to(0,1)
-                lcd.putstr("Slot_001")
+                lcd.putstr(f"Slot_001   {product_stock}")
                 lcd.move_to(15,1)
                 lcd.putstr("<")
                 condition = 31
@@ -787,13 +863,33 @@ while True:
             condition = 30
         
         elif (key == "8"): # Stock weiter runter
+            
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+            for product in stock['stock']:
+                if product['item_id'] == "002":
+                    product_stock2 = product['stock']
+                    break
+            
             lcd.clear()
-            lcd.putstr("Slot_001")
+            lcd.putstr(f"Slot_001   {product_stock}")
             lcd.move_to(0,1)
-            lcd.putstr("Slot_002")
+            lcd.putstr(f"Slot_002   {product_stock2}")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 33
+        
+        elif (key == "*"):
+                lcd.clear()
+                lcd.putstr("[Stock Settings]")
+                lcd.move_to(0,1)
+                lcd.putstr(f"Slot_001   {product_stock}")
+                lcd.move_to(14,1)
+                lcd.putstr("<")
+                condition = 48         
     
     elif (condition == 33): # Stock Settings unten
         if (key == "#"): # Zurück ins Debug Menu
@@ -806,13 +902,34 @@ while True:
             condition = 30
         
         elif (key == "2"): # Stock weiter hoch
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
             lcd.clear()
             lcd.putstr("[Stock Settings]")
             lcd.move_to(0,1)
-            lcd.putstr("Slot_001")
+            lcd.putstr(f"Slot_001   {product_stock}")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 31
+        
+        elif (key == "*"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+            for product in stock['stock']:
+                if product['item_id'] == "002":
+                    product_stock2 = product['stock']
+                    break
+                lcd.clear()
+                lcd.putstr(f"Slot_001   {product_stock}")
+                lcd.move_to(0,1)
+                lcd.putstr(f"Slot_002   {product_stock2}")
+                lcd.move_to(14,1)
+                lcd.putstr("<")
+                condition = 49           
             
     
     elif (condition == 32): # LED Settings unten
@@ -826,17 +943,17 @@ while True:
             condition = 2
             main_menu()
         
-        elif (key == "*"):
+        elif (key == "*"): # In LED Settings rein
             lcd.clear()
             lcd.putstr("[LED Settings]")
             lcd.move_to(0,1)
-            lcd.putstr("Led_Front")
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 43
             
 
-        elif (key == "2"):
+        elif (key == "2"): # Zurück an Anfang des Debug Modes
             lcd.clear()
             lcd.putstr("[Debug-Mode]")
             lcd.move_to(0,1)
@@ -845,7 +962,7 @@ while True:
             lcd.putstr("<")
             condition = 30
         
-        elif (key == "8"):
+        elif (key == "8"): # Weiter runter
             lcd.clear()
             lcd.putstr("LED Settings")
             lcd.move_to(0,1)
@@ -854,7 +971,7 @@ while True:
             lcd.putstr("<")
             condition = 34
 
-    elif (condition == 34):
+    elif (condition == 34): # Weiter runter
         if (key == "#"):
             lcd.clear()
             led_front.strip_red(0.5)
@@ -973,14 +1090,23 @@ while True:
             lcd.putstr("<")
             condition = 30
             
-        if (key == "8"):
+        elif (key == "8"):
             lcd.clear()
-            lcd.putstr("Led_Front")
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
             lcd.move_to(0,1)
-            lcd.putstr("Led_001")
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 44
+        
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr("[LED Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+            condition = 50       
             
     elif (condition == 44): # LED Settings 2
         if (key == "#"): # Zurück ins Debug Menu
@@ -996,19 +1122,28 @@ while True:
             lcd.clear()
             lcd.putstr("[LED Settings]")
             lcd.move_to(0,1)
-            lcd.putstr("Led_Front")
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 43
         
         elif (key == "8"):
             lcd.clear()
-            lcd.putstr("Led_001")
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
             lcd.move_to(0,1)
-            lcd.putstr("Led_002")
+            lcd.putstr(f"Led_002   {stock['led_brightness']['led_002']}")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 45
+
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+            condition = 51
     
     elif (condition == 45): # LED Settings 3
         if (key == "#"): # Zurück ins Debug Menu
@@ -1022,12 +1157,21 @@ while True:
         
         elif (key == "2"):
             lcd.clear()
-            lcd.putstr("Led_Front")
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
             lcd.move_to(0,1)
-            lcd.putstr("Led_001")
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
             lcd.move_to(15,1)
             lcd.putstr("<")
-            condition = 43
+            condition = 44
+
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_002   {stock['led_brightness']['led_002']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+            condition = 52
         
     elif (condition == 46):
         if (key == "#"): # Zurück ins Debug Menu
@@ -1080,4 +1224,265 @@ while True:
             motor_002.one_rotate()
             led_002.strip_white(0.5)
             led_001.strip_white(0.5)
+    
+    elif (condition == 48):
+        if (key == "#"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+
+            lcd.clear()
+            lcd.putstr("[Stock Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_001   {product_stock}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 31
+        
+        elif (key == "*"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+
+            lcd.clear()
+            lcd.putstr("[Stock Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_001   {product_stock}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 31
+        
+        elif (key == "2"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+
             
+            increase_stock("001")
+            lcd.clear()
+            lcd.putstr("[Stock Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_001   {product_stock + 1}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+        
+        elif (key == "8"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+
+            decrease_stock("001")
+            lcd.clear()
+            lcd.putstr("[Stock Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_001   {product_stock - 1}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+            
+    elif (condition == 49):
+        if (key == "#"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+            for product in stock['stock']:
+                if product['item_id'] == "002":
+                    product_stock2 = product['stock']
+                    break
+
+            lcd.clear()
+            lcd.putstr(f"Slot_001   {product_stock}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_002   {product_stock2}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 33
+        
+        elif (key == "*"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+            for product in stock['stock']:
+                if product['item_id'] == "002":
+                    product_stock2 = product['stock']
+                    break
+                
+
+            lcd.clear()
+            lcd.putstr(f"Slot_001   {product_stock}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_002   {product_stock2}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 33
+        
+        elif (key == "2"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+            for product in stock['stock']:
+                if product['item_id'] == "002":
+                    product_stock2 = product['stock']
+                    break
+                
+
+            
+            increase_stock("002")
+            lcd.clear()
+            lcd.putstr(f"Slot_001   {product_stock}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_002   {product_stock2 + 1}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+        
+        elif (key == "8"):
+            for product in stock['stock']:
+                if product['item_id'] == "001":
+                    product_stock = product['stock']
+                    break
+                
+            for product in stock['stock']:
+                if product['item_id'] == "002":
+                    product_stock2 = product['stock']
+                    break
+                
+
+            decrease_stock("002")
+            lcd.clear()
+            lcd.putstr(f"Slot_001   {product_stock}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Slot_002   {product_stock2 - 1}")
+            lcd.move_to(14,1)
+            lcd.putstr("<") 
+            
+    elif (condition == 50):
+        if (key == "#"):
+
+            lcd.clear()
+            lcd.putstr("[LED Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 43
+        
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr("[LED Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 43
+        
+        elif (key == "2"):
+            
+            increase_brightness("led_front")
+            lcd.clear()
+            lcd.putstr("[LED Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+        
+        elif (key == "8"):
+
+            decrease_brightness("led_front")
+            lcd.clear()
+            lcd.putstr("[LED Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+
+    elif (condition == 51):
+        if (key == "#"):
+
+            lcd.clear()
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 44
+        
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 44
+        
+        elif (key == "2"):
+            
+            increase_brightness("led_001")
+            lcd.clear()
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+        
+        elif (key == "8"):
+
+            decrease_brightness("led_001")
+            lcd.clear()
+            lcd.putstr(f"Led_Front {stock['led_brightness']['led_front']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+
+    elif (condition == 52):
+        if (key == "#"):
+
+            lcd.clear()
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_002   {stock['led_brightness']['led_002']}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 45
+        
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_002   {stock['led_brightness']['led_002']}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 45
+        
+        elif (key == "2"):
+            
+            increase_brightness("led_002")
+            lcd.clear()
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_002   {stock['led_brightness']['led_002']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
+        
+        elif (key == "8"):
+
+            decrease_brightness("led_002")
+            lcd.clear()
+            lcd.putstr(f"Led_001   {stock['led_brightness']['led_001']}")
+            lcd.move_to(0,1)
+            lcd.putstr(f"Led_002   {stock['led_brightness']['led_002']}")
+            lcd.move_to(14,1)
+            lcd.putstr("<")
