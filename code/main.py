@@ -98,10 +98,16 @@ user_input = None
 error_code = None
 key = None
 
+pay_start_time = None
+pay_max_time = None
+current_pay_time = None
+
 debug.println("Setup automat variables", "INIT")
 
 def main_menu():
     led_front.strip_white(0.5)
+    led_001.strip_white(0.5)
+    led_002.strip_white(0.5)
     led_g.off()
     led_r.off()
     lcd.clear()
@@ -112,7 +118,6 @@ def main_menu():
     debug.println("Main menu loaded")
 
 def led_strips_off():
-    
     led_front.off()
     led_001.off()
     led_002.off()
@@ -296,6 +301,8 @@ while True:
             lcd.putstr("DEBUG PASSWORD:")
 
             led_front.strip_gradient((250, 35, 27),(250, 127, 27))
+            led_001.strip_gradient((250, 35, 27),(250, 127, 27))
+            led_002.strip_gradient((250, 35, 27),(250, 127, 27))
             condition = 20
             debug.println("Debug enter_password_screen loaded", "INFO")
             debug.println(f"Condition changed to {condition}", "DEBUG")
@@ -458,23 +465,31 @@ while True:
                 lcd.putstr(product_name)
 
                 if (product_motor == "motor_001"):
-                led_001.strip_green(0.5)
+                    led_001.strip_green(0.5)
+                    led_002.strip_white(0.25)
                 elif (product_motor == "motor_002"):
-                led_002.strip_green(0.5)
+                    led_002.strip_green(0.5)
+                    led_001.strip_white(0.25)
             
+                pay_multiplier = config['settings']['max_time_at_pay']
+                pay_start_time = utime.ticks_ms()
+                pay_max_time = pay_start_time + pay_multiplier
+                
                 condition = 7
                 debug.println(f"Condition changed to {condition}", "DEBUG")
             else:
                 lcd.clear()
                 led_r.on()
-                led_front.strip_red(0.5)
+                led_front.strip_white(0.5)
                 lcd.putstr(lang['product_not_in_stock'])
                 debug.println(f"Product not in stock", "ERROR")
 
                 if (product_motor == "motor_001"):
                     led_001.strip_red(0.5)
+                    led_002.strip_white(0.25)
                 elif (product_motor == "motor_002"):
                     led_002.strip_red(0.5)
+                    led_001.strip_white(0.25)
 
                 utime.sleep(2)
             
@@ -499,14 +514,49 @@ while True:
             
     elif (condition == 7):
         
+        current_pay_time = utime.ticks_ms()
+        
         # Geld eingabe
         led_front.strip_white(0.5)
         debug.println(f"Waiting for pay...", "INFO")
+        
         if (key == "*"):
 
+            pay_start_time = None
+            pay_max_time = None
+            current_pay_time = None
+            
+            lcd.clear()
+            led_g.on()
+            lcd.putstr(str(product_id) + ":")
+            lcd.move_to(6,0)
+            lcd.putstr(lang['current'])
+            lcd.move_to(12,0)
+            lcd.putstr(str(product_price))
+            lcd.move_to(0,1)
+            lcd.putstr(lang['product_payed'])
+            
+            utime.sleep(2)
+            
             debug.println(f"Product with ID '{product_id}' was bought...", "INFO")
             condition = 10
             debug.println(f"Condition changed to {condition}", "DEBUG")
+        
+        if (current_pay_time == pay_max_time):
+            
+            lcd.clear()
+            lcd.putstr(lang['waited_too_long'])
+            if (product_motor == "motor_001"):
+                led_001.strip_red(0.5)
+                led_002.strip_white(0.25)
+            elif (product_motor == "motor_002"):
+                led_002.strip_red(0.5)
+                led_001.strip_white(0.25)
+            
+            utime.sleep(2)            
+            
+            condition = 2
+            main_menu()
         
     elif (condition == 10):
 
@@ -519,11 +569,20 @@ while True:
         led_r.on()
         
         if (product_motor == "motor_001"):
+            led_001.strip_colour(255, 180, 5)
             motor_001.one_rotate()
         elif (product_motor == "motor_002"):
+            led_002.strip_colour(255, 180, 5)
             motor_002.one_rotate()
         else:
             debug.println(f"Error with {product_motor}", "ERROR")
+            lcd.clear()
+            lcd.putstr("Machine run into error with motor")
+            utime.sleep(2)
+            lcd.clear()
+            lcd.putstr("Machine will restart...")
+            utime.sleep(2)
+            restart()
 
         debug.println(f"Product successfully issued", "INFO")
         debug.println(f"New stock: '{product_stock - 1}'", "INFO")
@@ -671,12 +730,14 @@ while True:
             
             debug_code = config["codes"]["debug_mode"]
             
-            if (user_input == debug_code):
+            if (user_input == debug_code): # Debug Mode entered
                 led_front.strip_gradient((2, 138, 191),(2, 204, 123))
                 lcd.clear()
                 lcd.putstr("[Debug-Mode]")
                 lcd.move_to(0,1)
-                lcd.putstr("Stock Settings <")
+                lcd.putstr("Stock Settings")
+                lcd.move_to(15,1)
+                lcd.putstr("<")
                 condition = 30
             
             else:
@@ -697,21 +758,64 @@ while True:
             condition = 2
             main_menu()
         
-        elif (key == "8"):
+        elif (key == "8"): # Eins weiter runter im Main menu
                 lcd.clear()
                 lcd.putstr("Stock Settings")
                 lcd.move_to(0,1)
-                lcd.putstr("LED Settings <")
+                lcd.putstr("LED Settings")
+                lcd.move_to(15,1)
+                lcd.putstr("<")
                 condition = 32
         
-        elif (key == "*"):
+        elif (key == "*"): # Enter Stock Settings
                 lcd.clear()
                 lcd.putstr("[Stock Settings]")
                 lcd.move_to(0,1)
-                lcd.putstr("Slot_001 <")
+                lcd.putstr("Slot_001")
+                lcd.move_to(15,1)
+                lcd.putstr("<")
                 condition = 31
     
-    elif (condition == 32):
+    elif (condition == 31): # Stock Settings
+        if (key == "#"): # Zurück ins Debug Menu
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+        
+        elif (key == "8"): # Stock weiter runter
+            lcd.clear()
+            lcd.putstr("Slot_001")
+            lcd.move_to(0,1)
+            lcd.putstr("Slot_002")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 33
+    
+    elif (condition == 33): # Stock Settings unten
+        if (key == "#"): # Zurück ins Debug Menu
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+        
+        elif (key == "2"): # Stock weiter hoch
+            lcd.clear()
+            lcd.putstr("[Stock Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr("Slot_001")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 31
+            
+    
+    elif (condition == 32): # LED Settings unten
         if (key == "#"):
             lcd.clear()
             led_front.strip_red(0.5)
@@ -721,19 +825,33 @@ while True:
             
             condition = 2
             main_menu()
+        
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr("[LED Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr("Led_Front")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 43
+            
 
         elif (key == "2"):
             lcd.clear()
             lcd.putstr("[Debug-Mode]")
             lcd.move_to(0,1)
-            lcd.putstr("Stock Settings <")
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
             condition = 30
         
         elif (key == "8"):
             lcd.clear()
             lcd.putstr("LED Settings")
             lcd.move_to(0,1)
-            lcd.putstr("Motor Settings <")
+            lcd.putstr("Motor Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
             condition = 34
 
     elif (condition == 34):
@@ -751,14 +869,18 @@ while True:
             lcd.clear()
             lcd.putstr("Stock Settings")
             lcd.move_to(0,1)
-            lcd.putstr("LED Settings <")
+            lcd.putstr("LED Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
             condition = 32
 
         elif (key == "8"):
             lcd.clear()
             lcd.putstr("Motor Settings")
             lcd.move_to(0,1)
-            lcd.putstr("Generell <")
+            lcd.putstr("Generel")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
             condition = 36
     
     elif (condition == 36):
@@ -776,14 +898,18 @@ while True:
             lcd.clear()
             lcd.putstr("LED Settings")
             lcd.move_to(0,1)
-            lcd.putstr("Motor Settings <")
+            lcd.putstr("Motor Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
             condition = 32
         
         elif (key == "*"):
             lcd.clear()
-            lcd.putstr("[Generell]")
+            lcd.putstr("[Generel]")
             lcd.move_to(0,1)
-            lcd.putstr(f"OS Version {OS_Version} <")
+            lcd.putstr(f"OS Version {OS_Version}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
             condition = 40
     
     elif (condition == 40):
@@ -794,9 +920,49 @@ while True:
             lcd.clear()
             lcd.putstr(f"OS Version {OS_Version}")
             lcd.move_to(0,1)
-            lcd.putstr("Restard <")
+            lcd.putstr("Restard")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
             condition = 42
     
     elif (condition == 42):
         if (key == "*"):
             restart()
+    
+    elif (condition == 43): # LED Settings innerhalb
+        if (key == "#"): # Zurück ins Debug Menu
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+            
+        if (key == "8"):
+            lcd.clear()
+            lcd.putstr("Led_Front")
+            lcd.move_to(0,1)
+            lcd.putstr("Led_001")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 44
+            
+    elif (condition == 44):
+        if (key == "#"): # Zurück ins Debug Menu
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+        
+        elif (key == "2"):
+            lcd.clear()
+            lcd.putstr("[LED Settings]")
+            lcd.move_to(0,1)
+            lcd.putstr("Led_Front")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 43

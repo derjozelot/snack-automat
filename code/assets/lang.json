@@ -14,5 +14,7 @@
   "unknown_error": "Unbekannter Fehler",
   "current": "EUR",
   "abort": "Abbruch",
-  "product_out_of_stock": "Produkt nicht verfügbar"
+  "product_out_of_stock": "Produkt nicht verfügbar",
+  "waited_too_long": "Zulang gewartet...",
+  "product_payed": "Produkt bezahlt"
 }

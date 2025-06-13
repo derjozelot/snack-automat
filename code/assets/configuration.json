@@ -17,7 +17,8 @@
   ],
   "settings":
       {
-          "standard_condition": 0
+          "standard_condition": 0,
+          "max_time_at_pay": 5000
       },
   "codes": {
     "debug_mode": "72819",
