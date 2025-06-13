@@ -849,7 +849,7 @@ while True:
             lcd.clear()
             lcd.putstr("LED Settings")
             lcd.move_to(0,1)
-            lcd.putstr("Motor Settings")
+            lcd.putstr("Rotate Motor")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 34
@@ -864,6 +864,15 @@ while True:
             
             condition = 2
             main_menu()
+        
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr("[Rotate Motor]")
+            lcd.move_to(0,1)
+            lcd.putstr("Motor_001")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 46
 
         elif (key == "2"):
             lcd.clear()
@@ -876,7 +885,7 @@ while True:
 
         elif (key == "8"):
             lcd.clear()
-            lcd.putstr("Motor Settings")
+            lcd.putstr("Rotate Motor")
             lcd.move_to(0,1)
             lcd.putstr("Generel")
             lcd.move_to(15,1)
@@ -915,17 +924,42 @@ while True:
     elif (condition == 40):
         if (key == "#"):
             lcd.clear()
-            condition = 36
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+            
         elif (key == "8"):
             lcd.clear()
             lcd.putstr(f"OS Version {OS_Version}")
             lcd.move_to(0,1)
-            lcd.putstr("Restard")
+            lcd.putstr("Restart")
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 42
     
     elif (condition == 42):
+        if (key == "#"):
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+        
+        elif (key == "2"):
+            lcd.clear()
+            lcd.putstr("[Generel]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"OS Version {OS_Version}")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 40
+            
+            
         if (key == "*"):
             restart()
     
@@ -948,7 +982,7 @@ while True:
             lcd.putstr("<")
             condition = 44
             
-    elif (condition == 44):
+    elif (condition == 44): # LED Settings 2
         if (key == "#"): # Zurück ins Debug Menu
             lcd.clear()
             lcd.putstr("[Debug-Mode]")
@@ -966,3 +1000,84 @@ while True:
             lcd.move_to(15,1)
             lcd.putstr("<")
             condition = 43
+        
+        elif (key == "8"):
+            lcd.clear()
+            lcd.putstr("Led_001")
+            lcd.move_to(0,1)
+            lcd.putstr("Led_002")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 45
+    
+    elif (condition == 45): # LED Settings 3
+        if (key == "#"): # Zurück ins Debug Menu
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+        
+        elif (key == "2"):
+            lcd.clear()
+            lcd.putstr("Led_Front")
+            lcd.move_to(0,1)
+            lcd.putstr("Led_001")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 43
+        
+    elif (condition == 46):
+        if (key == "#"): # Zurück ins Debug Menu
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30         
+        
+        elif (key == "8"):
+            lcd.clear()
+            lcd.putstr("Motor_001")
+            lcd.move_to(0,1)
+            lcd.putstr("Motor_002")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 47
+        
+        elif (key == "*"):
+            led_001.strip_green(0.5)
+            led_002.strip_white(0.25)
+            motor_001.one_rotate()
+            led_001.strip_white(0.5)
+            led_002.strip_white(0.5)
+    
+    elif (condition == 47): # Motor 002
+        if (key == "#"): # Zurück ins Debug Menu
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 30
+        
+        elif (key == "2"): # Motor 001
+            lcd.clear()
+            lcd.putstr("[Rotate Motor]")
+            lcd.move_to(0,1)
+            lcd.putstr("Motor_001")
+            lcd.move_to(15,1)
+            lcd.putstr("<")
+            condition = 46
+            
+        elif (key == "*"):
+            led_002.strip_green(0.5)
+            led_001.strip_white(0.25)
+            motor_002.one_rotate()
+            led_002.strip_white(0.5)
+            led_001.strip_white(0.5)
+            
