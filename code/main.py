@@ -30,6 +30,8 @@ debug.save_log()
 
 debug.println("Imports loaded", "INIT")
 
+OS_Version = "1.4"
+
 # Hardware Setup
 
 led_g = Pin(17, Pin.OUT)
@@ -142,35 +144,78 @@ def decrease_stock(item_id):
     return False
 
 def start_led_animation():
+    led_001.led_colour(1, 255, 255, 255, 0.5)
+    led_002.led_colour(1, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(2, 255, 255, 255, 0.5)
+    led_002.led_colour(2, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(3, 255, 255, 255, 0.5)
+    led_002.led_colour(3, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(4, 255, 255, 255, 0.5)
+    led_002.led_colour(4, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(5, 255, 255, 255, 0.5)
+    led_002.led_colour(5, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(6, 255, 255, 255, 0.5)
+    led_002.led_colour(6, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(7, 255, 255, 255, 0.5)
+    led_002.led_colour(7, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(8, 255, 255, 255, 0.5)
+    led_002.led_colour(8, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(9, 255, 255, 255, 0.5)
+    led_002.led_colour(9, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(10, 255, 255, 255, 0.5)
+    led_002.led_colour(10, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(11, 255, 255, 255, 0.5)
+    led_002.led_colour(11, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(12, 255, 255, 255, 0.5)
+    led_002.led_colour(12, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(13, 255, 255, 255, 0.5)
+    led_002.led_colour(13, 255, 255, 255, 0.5)
+    utime.sleep(0.1)
+    led_001.led_colour(14, 255, 255, 255, 0.5)
+    led_002.led_colour(14, 255, 255, 255, 0.5)
+    utime.sleep(0.05)
+
     led_front.led_colour(1, 255, 255, 255, 0.5)
     led_front.led_colour(17, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(2, 255, 255, 255, 0.5)
     led_front.led_colour(16, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(3, 255, 255, 255, 0.5)
     led_front.led_colour(15, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(4, 255, 255, 255, 0.5)
     led_front.led_colour(14, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(5, 255, 255, 255, 0.5)
     led_front.led_colour(13, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(6, 255, 255, 255, 0.5)
     led_front.led_colour(12, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(7, 255, 255, 255, 0.5)
     led_front.led_colour(11, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(7, 255, 255, 255, 0.5)
     led_front.led_colour(11, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(8, 255, 255, 255, 0.5)
     led_front.led_colour(10, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     led_front.led_colour(9, 255, 255, 255, 0.5)
-    utime.sleep(0.1)
+    utime.sleep(0.05)
     
 
 
@@ -411,6 +456,11 @@ while True:
                 lcd.putstr(str(product_price))
                 lcd.move_to(0,1)
                 lcd.putstr(product_name)
+
+                if (product_motor == "motor_001"):
+                led_001.strip_green(0.5)
+                elif (product_motor == "motor_002"):
+                led_002.strip_green(0.5)
             
                 condition = 7
                 debug.println(f"Condition changed to {condition}", "DEBUG")
@@ -420,6 +470,12 @@ while True:
                 led_front.strip_red(0.5)
                 lcd.putstr(lang['product_not_in_stock'])
                 debug.println(f"Product not in stock", "ERROR")
+
+                if (product_motor == "motor_001"):
+                    led_001.strip_red(0.5)
+                elif (product_motor == "motor_002"):
+                    led_002.strip_red(0.5)
+
                 utime.sleep(2)
             
                 condition = 2
@@ -433,6 +489,7 @@ while True:
             lcd.putstr(f"ID {product_id}")
             lcd.move_to(0,1)
             lcd.putstr(lang['product_not_exist'])
+
             utime.sleep(2)
             debug.println(f"Product with ID '{product_id}' not found", "ERROR")
             
@@ -445,11 +502,11 @@ while True:
         # Geld eingabe
         led_front.strip_white(0.5)
         debug.println(f"Waiting for pay...", "INFO")
-        
-        utime.sleep(2)
-        debug.println(f"Product with ID '{product_id}' was bought...", "INFO")
-        condition = 10
-        debug.println(f"Condition changed to {condition}", "DEBUG")
+        if (key == "*"):
+
+            debug.println(f"Product with ID '{product_id}' was bought...", "INFO")
+            condition = 10
+            debug.println(f"Condition changed to {condition}", "DEBUG")
         
     elif (condition == 10):
 
@@ -467,7 +524,7 @@ while True:
             motor_002.one_rotate()
         else:
             debug.println(f"Error with {product_motor}", "ERROR")
-        
+
         debug.println(f"Product successfully issued", "INFO")
         debug.println(f"New stock: '{product_stock - 1}'", "INFO")
         
@@ -617,7 +674,9 @@ while True:
             if (user_input == debug_code):
                 led_front.strip_gradient((2, 138, 191),(2, 204, 123))
                 lcd.clear()
-                lcd.putstr("Entered Debug mode")
+                lcd.putstr("[Debug-Mode]")
+                lcd.move_to(0,1)
+                lcd.putstr("Stock Settings <")
                 condition = 30
             
             else:
@@ -626,4 +685,118 @@ while True:
                 utime.sleep(2)
                 condition = 2
                 main_menu()
+    
+    elif (condition == 30):
+        if (key == "#"):
+            lcd.clear()
+            led_front.strip_red(0.5)
+            lcd.putstr(lang['cancel_pressed'])
+            led_r.on()
+            utime.sleep(2)
             
+            condition = 2
+            main_menu()
+        
+        elif (key == "8"):
+                lcd.clear()
+                lcd.putstr("Stock Settings")
+                lcd.move_to(0,1)
+                lcd.putstr("LED Settings <")
+                condition = 32
+        
+        elif (key == "*"):
+                lcd.clear()
+                lcd.putstr("[Stock Settings]")
+                lcd.move_to(0,1)
+                lcd.putstr("Slot_001 <")
+                condition = 31
+    
+    elif (condition == 32):
+        if (key == "#"):
+            lcd.clear()
+            led_front.strip_red(0.5)
+            lcd.putstr(lang['cancel_pressed'])
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+
+        elif (key == "2"):
+            lcd.clear()
+            lcd.putstr("[Debug-Mode]")
+            lcd.move_to(0,1)
+            lcd.putstr("Stock Settings <")
+            condition = 30
+        
+        elif (key == "8"):
+            lcd.clear()
+            lcd.putstr("LED Settings")
+            lcd.move_to(0,1)
+            lcd.putstr("Motor Settings <")
+            condition = 34
+
+    elif (condition == 34):
+        if (key == "#"):
+            lcd.clear()
+            led_front.strip_red(0.5)
+            lcd.putstr(lang['cancel_pressed'])
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+
+        elif (key == "2"):
+            lcd.clear()
+            lcd.putstr("Stock Settings")
+            lcd.move_to(0,1)
+            lcd.putstr("LED Settings <")
+            condition = 32
+
+        elif (key == "8"):
+            lcd.clear()
+            lcd.putstr("Motor Settings")
+            lcd.move_to(0,1)
+            lcd.putstr("Generell <")
+            condition = 36
+    
+    elif (condition == 36):
+        if (key == "#"):
+            lcd.clear()
+            led_front.strip_red(0.5)
+            lcd.putstr(lang['cancel_pressed'])
+            led_r.on()
+            utime.sleep(2)
+            
+            condition = 2
+            main_menu()
+
+        elif (key == "2"):
+            lcd.clear()
+            lcd.putstr("LED Settings")
+            lcd.move_to(0,1)
+            lcd.putstr("Motor Settings <")
+            condition = 32
+        
+        elif (key == "*"):
+            lcd.clear()
+            lcd.putstr("[Generell]")
+            lcd.move_to(0,1)
+            lcd.putstr(f"OS Version {OS_Version} <")
+            condition = 40
+    
+    elif (condition == 40):
+        if (key == "#"):
+            lcd.clear()
+            condition = 36
+        elif (key == "8"):
+            lcd.clear()
+            lcd.putstr(f"OS Version {OS_Version}")
+            lcd.move_to(0,1)
+            lcd.putstr("Restard <")
+            condition = 42
+    
+    elif (condition == 42):
+        if (key == "*"):
+            restart()
