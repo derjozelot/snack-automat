@@ -96,3 +96,6 @@ class LedStrip():
             self.np[i] = (r, g, b)
 
         self.np.write()
+    
+if __name__ == "__main__":
+    input("Hinweis: Diese Datei dient ausschließlich als Bibliothek und ist nicht für den direkten Zugriff bestimmt.\n\nDrücke Enter zum beenden...")

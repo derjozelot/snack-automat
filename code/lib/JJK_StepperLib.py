@@ -57,5 +57,7 @@ class StepperMotor(object):
     def one_rotate(self):
         for i in range(512):
             self.rotate()
-
+            
+if __name__ == "__main__":
+    input("Hinweis: Diese Datei dient ausschließlich als Bibliothek und ist nicht für den direkten Zugriff bestimmt.\n\nDrücke Enter zum beenden...")
 

@@ -1,6 +1,7 @@
 #
 # Süßgkeiten Automat von Jakob F. Jonas O. und Karim A.
 # Wir haben uns dazu entschieden die Variablen und Backend benannten Funktionen aus Simplizität auf Englisch zu benennen!
+#
 
 #
 # JJK Electronics©
@@ -11,7 +12,10 @@
 # '#': Abbruch
 # '*': Bestätigen
 
-# Es gibt einige geheime Codes die man eingeben kann, die auch in der configuration.json geändert werden können
+# Es gibt einige geheime Codes die man eingeben kann, die auch in der 'configuration.json' geändert werden können
+# Mit der 'lang.json' können alle Nachrichten, die auf dem Screen angezeigt werden, angepasst werden
+# Die 'stock.json' dient rein der Einstellung der Produkte und LEDs. Dies kann aber auch über den eingebauten Debug-Mode, den man mit
+# '*' erreichen kann, angepasst werden
 
 
 from time import sleep_ms
@@ -125,6 +129,79 @@ def led_strips_off():
 def restart():
     global condition
     
+    lcd.clear()
+    lcd.pustr(lang['restart_message'])
+    led_front.led_colour(9, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(10, 0, 0, 0)
+    led_front.led_colour(8, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(11, 0, 0, 0)
+    led_front.led_colour(7, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(12, 0, 0, 0)
+    led_front.led_colour(6, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(13, 0, 0, 0)
+    led_front.led_colour(5, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(14, 0, 0, 0)
+    led_front.led_colour(4, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(15, 0, 0, 0)
+    led_front.led_colour(3, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(16, 0, 0, 0)
+    led_front.led_colour(2, 0, 0, 0)
+    utime.sleep(0.05)
+    led_front.led_colour(17, 0, 0, 0)
+    led_front.led_colour(1, 0, 0, 0)
+    utime.sleep(0.05)
+    
+    led_001.led_colour(14, 0, 0, 0)
+    led_002.led_colour(14, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(13, 0, 0, 0)
+    led_002.led_colour(13, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(12, 0, 0, 0)
+    led_002.led_colour(12, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(11, 0, 0, 0)
+    led_002.led_colour(11, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(10, 0, 0, 0)
+    led_002.led_colour(10, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(9, 0, 0, 0)
+    led_002.led_colour(9, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(8, 0, 0, 0)
+    led_002.led_colour(8, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(7, 0, 0, 0)
+    led_002.led_colour(7, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(6, 0, 0, 0)
+    led_002.led_colour(6, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(5, 0, 0, 0)
+    led_002.led_colour(5, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(4, 0, 0, 0)
+    led_002.led_colour(4, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(3, 0, 0, 0)
+    led_002.led_colour(3, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(2, 0, 0, 0)
+    led_002.led_colour(2, 0, 0, 0)
+    utime.sleep(0.1)
+    led_001.led_colour(1, 0, 0, 0)
+    led_002.led_colour(1, 0, 0, 0)
+    utime.sleep(0.1)
+
+    lcd.clear()
     led_strips_off()
     condition = 0
     debug.println("Restart","SYSTEM")

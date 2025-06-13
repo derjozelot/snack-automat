@@ -16,5 +16,6 @@
   "abort": "Abbruch",
   "product_out_of_stock": "Produkt nicht verfügbar",
   "waited_too_long": "Zulang gewartet...",
-  "product_payed": "Produkt bezahlt"
+  "product_payed": "Produkt bezahlt",
+  "restart_message": "Auf Wiedersehen!"
 }
