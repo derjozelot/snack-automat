@@ -1,5 +1,4 @@
 import time
-import utime
 from machine import Pin
 
 geld_einwurf = Pin(16, Pin.IN, Pin.PULL_DOWN)
@@ -26,16 +25,16 @@ while True:
             startzeit = endzeit - startzeit
         
         if impulse == 0:
-            print("Die Zeit ist abgelaufen! Drück den Knopf nochmal!")
+            print("Die Zeit ist abgelaufen! Keine Eingabe erkannt!")
         elif impulse == 1:
-            print("Sie haben 50 Cent eingeworfen!")
+            print("Sie haben 50 Cent eingeworfen!", "(",impulse, "Impuls(e))")
             impulse = 0
         elif impulse == 2:
-            print("Sie haben 1 Euro eingeworfen!")
+            print("Sie haben 1 Euro eingeworfen!", "(",impulse, "Impuls(e))")
             impulse = 0
         elif impulse == 3:
-            print("Sie haben 2 Euro eingeworfen!")
+            print("Sie haben 2 Euro eingeworfen!", "(",impulse, "Impuls(e))")
             impulse = 0
         else:
-            print("Münze unzulässig! Impulse der Münze sind nicht bekannt!")
+            print("Münze unzulässig! Impulse der Münze sind nicht bekannt!", "(",impulse, "Impuls(e))")
             impulse = 0
