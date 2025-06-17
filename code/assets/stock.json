@@ -1,1 +1,1 @@
-{"stock": [{"item_id": "001","stock": 9},{"item_id": "002", "stock": 5}],"led_brightness":{"led_front": 0.5, "led_001": 0.5, "led_002": 0.5}}
+{"stock": [{"item_id": "001","stock": 9},{"item_id": "002", "stock": 5}],"led_brightness":{"led_front": 0.3, "led_001": 0.3, "led_002": 0.3}}
