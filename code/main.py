@@ -130,7 +130,7 @@ def restart():
     global condition
     
     lcd.clear()
-    lcd.pustr(lang['restart_message'])
+    lcd.putstr(lang['restart_message'])
     led_front.led_colour(9, 0, 0, 0)
     utime.sleep(0.05)
     led_front.led_colour(10, 0, 0, 0)
@@ -252,7 +252,7 @@ def decrease_brightness(led_id):
         return True
     elif led_id == "led_001":
         if stock['led_brightness']['led_001'] > 0:
-            stock['led_brightness']['led_001'] = round(stock['led_brightness']['led_002'] - 0.1, 1)
+            stock['led_brightness']['led_001'] = round(stock['led_brightness']['led_001'] - 0.1, 1)
         
         with open("assets/stock.json", "w") as file:
             json.dump(stock, file)
@@ -625,6 +625,7 @@ while True:
                 pay_max_time = pay_start_time + pay_multiplier
                 
                 condition = 7
+                debug.println(f"Waiting for pay...", "INFO")
                 debug.println(f"Condition changed to {condition}", "DEBUG")
             else:
                 lcd.clear()
@@ -667,7 +668,23 @@ while True:
         
         # Geld eingabe
         led_front.strip_white(stock['led_brightness']['led_front'])
-        debug.println(f"Waiting for pay...", "INFO")
+        
+        if (current_pay_time == pay_max_time):
+            
+            lcd.clear()
+            lcd.putstr(lang['waited_too_long'])
+            if (product_motor == "motor_001"):
+                led_001.strip_red(stock['led_brightness']['led_001'])
+                led_002.strip_white(stock['led_brightness']['led_002'] * 0.5)
+            elif (product_motor == "motor_002"):
+                led_002.strip_red(stock['led_brightness']['led_002'])
+                led_001.strip_white(stock['led_brightness']['led_001'] * 0.5)
+            
+            utime.sleep(2)            
+            
+            condition = 2
+            main_menu()
+
         
         if (key == "*"):
 
@@ -690,22 +707,7 @@ while True:
             debug.println(f"Product with ID '{product_id}' was bought...", "INFO")
             condition = 10
             debug.println(f"Condition changed to {condition}", "DEBUG")
-        
-        if (current_pay_time == pay_max_time):
-            
-            lcd.clear()
-            lcd.putstr(lang['waited_too_long'])
-            if (product_motor == "motor_001"):
-                led_001.strip_red(stock['led_brightness']['led_001'])
-                led_002.strip_white(stock['led_brightness']['led_002'] * 0.5)
-            elif (product_motor == "motor_002"):
-                led_002.strip_red(stock['led_brightness']['led_002'])
-                led_001.strip_white(stock['led_brightness']['led_f001'] * 0.5)
-            
-            utime.sleep(2)            
-            
-            condition = 2
-            main_menu()
+
         
     elif (condition == 10):
 

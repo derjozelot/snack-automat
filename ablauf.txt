@@ -1,0 +1,31 @@
+[Debug-Mode]
+Stock Settings < (Der Pfeil ist die aktuelle auswahl)
+Led Settings
+Motor Settin
+Generell 
+
+Im Stock Settings:
+[Stock Settings]
+Slot_001 20    <
+Slot_002 20 
+
+In Led Settings:
+[LED Settings]
+Brigtness <
+
+In Brightness:
+[Brightness]
+Led_001 0.5    <
+Led_002 0.5
+Led_Front 0.5
+
+In Generell Settings:
+[Generell]
+OS Version 1.4 <
+Restart
+
+Navigation: 
+key == 2 nach oben
+key == 8 nach unten
+key == "*" bestätigen auswählen
+key == "#" zurück

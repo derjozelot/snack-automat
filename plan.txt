@@ -1,2 +1,5 @@
-Nachrichten besser machen / konfigurierbar machen
-Code aufräumen
+Debug:
+	Motoren drehen
+	LEDs
+	restart
+	log files löschen
