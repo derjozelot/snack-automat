@@ -34,8 +34,6 @@ debug.save_log()
 
 debug.println("Imports loaded", "INIT")
 
-OS_Version = "1.4"
-
 # Hardware Setup
 
 led_g = Pin(17, Pin.OUT)
@@ -98,6 +96,7 @@ with open('assets/lang.json', encoding='utf-8') as lang_data:
 # Automat Variablen
 
 condition = config['settings']['standard_condition'] # condition = Zustand
+OS_Version = config['settings']['os_version__do_not_change']
 user_input = None
 error_code = None
 key = None
@@ -371,8 +370,6 @@ def start_led_animation():
     led_front.led_colour(9, 255, 255, 255, stock['led_brightness']['led_front'])
     utime.sleep(0.05)
     
-
-
 led_strips_off()
 debug.println("System variables and definitions setup finished", "INIT")
 
