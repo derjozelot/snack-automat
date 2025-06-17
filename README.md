@@ -13,4 +13,5 @@ Entwickelt von **Jakob, Karim und Jonas** mit dem Ziel, durch eine Kombination a
 ## Mitmachen
 
 Lade dir die neueste Version im **Releases**-Tab herunter und passe sie ganz nach deinen Vorstellungen an. Feedback und Verbesserungen sind jederzeit willkommen.
-![Release](https://github.com/derjozelot/snack-automat/releases)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/derjozelot/snack-automat?label=release)](https://github.com/derjozelot/snack-automat/releases)
+
